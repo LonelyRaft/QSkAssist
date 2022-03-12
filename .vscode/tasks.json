@@ -1,0 +1,48 @@
+{
+    "tasks": [
+        {
+            "type": "process",
+            "label": "build",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "/home/sparrow9/QSkAssist/build"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "config",
+            "detail": "生成二进制文件"
+        },
+        {
+            "type": "process",
+            "label": "config",
+            "command": "cmake",
+            "args": [
+                "-S",
+                "/home/sparrow9/QSkAssist",
+                "-B",
+                "/home/sparrow9/QSkAssist/build"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "生成编译文件"
+        }
+    ],
+    "version": "2.0.0"
+}
