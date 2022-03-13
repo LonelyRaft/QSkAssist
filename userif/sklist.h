@@ -2,11 +2,13 @@
 #ifndef Q_SOCKET_ASSISTANT_LIST
 #define Q_SOCKET_ASSISTANT_LIST
 
-#include <qlistview.h>
+#include <qtableview.h>
+#include <qheaderview.h>
+#include <qstandarditemmodel.h>
 #include <qmenu.h>
 #include <qaction.h>
 
-class SkListView : public QListView
+class SkListView : public QTableView
 {
 public:
     SkListView(QWidget *parent = 0);
@@ -20,6 +22,9 @@ public slots:
     // void onRefresh(bool);
 
 private:
+    QHeaderView *m_header;
+    QStandardItemModel *m_model;
+    void initUserIF(void);
 };
 
 class SkListMenu : public QMenu

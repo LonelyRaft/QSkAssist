@@ -3,6 +3,7 @@
 #define Q_SOCKET_ASSISTANT_TREE
 
 #include <qtreeview.h>
+#include <qstandarditemmodel.h>
 #include <qmenu.h>
 #include <qaction.h>
 
@@ -20,6 +21,8 @@ public slots:
     // void onRefresh(bool);
 
 private:
+    QStandardItemModel *m_model;
+    void initUserIF(void);
 };
 
 class SkTreeMenu : public QMenu

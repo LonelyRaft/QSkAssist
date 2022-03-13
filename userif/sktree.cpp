@@ -6,6 +6,8 @@
 
 SkTreeView::SkTreeView(QWidget *parent) : QTreeView(parent)
 {
+    m_model = new QStandardItemModel(this);
+    initUserIF();
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &SkTreeView::customContextMenuRequested,
             this, &SkTreeView::onCtxMenu);
@@ -13,6 +15,13 @@ SkTreeView::SkTreeView(QWidget *parent) : QTreeView(parent)
 
 SkTreeView::~SkTreeView()
 {
+    delete m_model;
+}
+
+void SkTreeView::initUserIF(void)
+{
+    m_model->setHorizontalHeaderLabels(QStringList(QString(tr("Servers"))));
+    setModel(m_model);
 }
 
 void SkTreeView::onCtxMenu(const QPoint &pos)

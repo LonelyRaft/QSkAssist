@@ -4,8 +4,11 @@
 #include "skdialog.h"
 #include "skconfig.h"
 
-SkListView::SkListView(QWidget *parent) : QListView(parent)
+SkListView::SkListView(QWidget *parent) : QTableView(parent)
 {
+    m_model = new QStandardItemModel(this);
+    m_header = horizontalHeader();
+    initUserIF();
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &SkListView::customContextMenuRequested,
             this, &SkListView::onCtxMenu);
@@ -13,6 +16,15 @@ SkListView::SkListView(QWidget *parent) : QListView(parent)
 
 SkListView::~SkListView()
 {
+    delete m_model;
+}
+
+void SkListView::initUserIF(void)
+{
+    m_model->setHorizontalHeaderLabels(QStringList(QString(tr("Clients"))));
+    setModel(m_model);
+    m_header->setStretchLastSection(true);
+    m_header->setDefaultAlignment(Qt::AlignLeft);
 }
 
 void SkListView::onCtxMenu(const QPoint &pos)
