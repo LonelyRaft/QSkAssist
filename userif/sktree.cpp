@@ -1,4 +1,5 @@
 
+#include <qdebug.h>
 #include "sktree.h"
 
 SkTreeView::SkTreeView(QWidget *parent) : QTreeView(parent)
@@ -15,8 +16,43 @@ SkTreeView::~SkTreeView()
 void SkTreeView::onCtxMenu(const QPoint &pos)
 {
     SkTreeMenu menu;
+    connect(menu.m_new, &QAction::triggered,
+            this, &SkTreeView::onNew);
+    connect(menu.m_start, &QAction::triggered,
+            this, &SkTreeView::onStart);
+    connect(menu.m_stop, &QAction::triggered,
+            this, &SkTreeView::onStop);
+    connect(menu.m_delete, &QAction::triggered,
+            this, &SkTreeView::onDelete);
+    // connect(menu.m_refresh, &QAction::triggered,
+    // this, &SkTreeView::onRefresh);
     menu.exec(QCursor::pos());
 }
+
+void SkTreeView::onNew(bool checked)
+{
+    qDebug() << "onNew Server\n";
+}
+
+void SkTreeView::onStart(bool checked)
+{
+    qDebug() << "onStart Server\n";
+}
+
+void SkTreeView::onStop(bool checked)
+{
+    qDebug() << "onStop Server\n";
+}
+
+void SkTreeView::onDelete(bool checked)
+{
+    qDebug() << "onDelete Server\n";
+}
+
+// void SkTreeView::onRefresh(bool checked)
+// {
+//     qDebug() << "onRefresh Server\n";
+// }
 
 SkTreeMenu::SkTreeMenu(QWidget *parent) : QMenu(parent)
 {
@@ -39,8 +75,10 @@ void SkTreeMenu::initUserIF(void)
     m_delete->setText(tr("Delete Server"));
     m_start->setText(tr("Start Server"));
     m_stop->setText(tr("Stop Server"));
+    // m_refresh->setText(tr("Refresh Server"));
     addAction(m_new);
     addAction(m_start);
     addAction(m_stop);
     addAction(m_delete);
+    // addAction(m_refresh);
 }

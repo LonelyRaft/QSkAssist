@@ -1,4 +1,5 @@
 
+#include <qdebug.h>
 #include "sklist.h"
 
 SkListView::SkListView(QWidget *parent) : QListView(parent)
@@ -15,8 +16,43 @@ SkListView::~SkListView()
 void SkListView::onCtxMenu(const QPoint &pos)
 {
     SkListMenu menu;
+    connect(menu.m_new, &QAction::triggered,
+            this, &SkListView::onNew);
+    connect(menu.m_start, &QAction::triggered,
+            this, &SkListView::onStart);
+    connect(menu.m_stop, &QAction::triggered,
+            this, &SkListView::onStop);
+    connect(menu.m_delete, &QAction::triggered,
+            this, &SkListView::onDelete);
+    // connect(menu.m_refresh, &QAction::triggered,
+    // this, &SkListView::onRefresh);
     menu.exec(QCursor::pos());
 }
+
+void SkListView::onNew(bool checked)
+{
+    qDebug() << "onNew Client\n";
+}
+
+void SkListView::onStart(bool checked)
+{
+    qDebug() << "onStart Client\n";
+}
+
+void SkListView::onStop(bool checked)
+{
+    qDebug() << "onStop Client\n";
+}
+
+void SkListView::onDelete(bool checked)
+{
+    qDebug() << "onDelete Client\n";
+}
+
+// void SkListView::onRefresh(bool checked)
+// {
+//     qDebug() << "onRefresh Client\n";
+// }
 
 SkListMenu::SkListMenu(QWidget *parent) : QMenu(parent)
 {
@@ -39,8 +75,10 @@ void SkListMenu::initUserIF(void)
     m_start->setText(tr("Start Client"));
     m_stop->setText(tr("Stop Client"));
     m_delete->setText(tr("Delete Client"));
+    // m_refresh->setText(tr("Refresh Client"));
     addAction(m_new);
     addAction(m_start);
     addAction(m_stop);
     addAction(m_delete);
+    // addAction(m_refresh);
 }

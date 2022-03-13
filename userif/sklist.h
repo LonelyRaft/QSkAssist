@@ -13,6 +13,11 @@ public:
     ~SkListView();
 public slots:
     void onCtxMenu(const QPoint &pos);
+    void onNew(bool);
+    void onStart(bool);
+    void onStop(bool);
+    void onDelete(bool);
+    // void onRefresh(bool);
 
 private:
 };
