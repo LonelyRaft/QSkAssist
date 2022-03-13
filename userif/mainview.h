@@ -5,7 +5,9 @@
 #include <qmainwindow.h>
 #include <qgridlayout.h>
 #include <qstatusbar.h>
+#include <qsplitter.h>
 #include "sktree.h"
+#include "sklist.h"
 
 class SkMainWindow : public QMainWindow
 {
@@ -15,7 +17,9 @@ public:
 
 private:
     QStatusBar *m_status;
-    SkTreeView *m_tree;
+    SkTreeView *m_server;
+    SkListView *m_client;
+    QSplitter *m_links;
     QGridLayout *m_layout;
     QWidget *m_content;
     void initUserIF(void);

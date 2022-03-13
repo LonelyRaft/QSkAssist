@@ -25,11 +25,11 @@ public:
 
 private:
     QAction *m_acts;
-    QAction *m_new_server;
-    QAction *m_del_server;
-    QAction *m_start_server;
-    QAction *m_stop_server;
-    QAction *m_edit_server;
+    QAction *m_new;
+    QAction *m_start;
+    QAction *m_stop;
+    QAction *m_delete;
+    // QAction *m_refresh;
     friend class SkTreeView;
     void initUserIF(void);
 };

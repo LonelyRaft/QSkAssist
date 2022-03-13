@@ -20,12 +20,11 @@ void SkTreeView::onCtxMenu(const QPoint &pos)
 
 SkTreeMenu::SkTreeMenu(QWidget *parent) : QMenu(parent)
 {
-    m_acts = new QAction[5];
-    m_new_server = m_acts;
-    m_del_server = m_acts + 1;
-    m_start_server = m_acts + 2;
-    m_stop_server = m_acts + 3;
-    m_edit_server = m_acts + 4;
+    m_acts = new QAction[4];
+    m_new = m_acts;
+    m_delete = m_acts + 1;
+    m_start = m_acts + 2;
+    m_stop = m_acts + 3;
     initUserIF();
 }
 
@@ -36,14 +35,12 @@ SkTreeMenu::~SkTreeMenu()
 
 void SkTreeMenu::initUserIF(void)
 {
-    m_new_server->setText(tr("New Server"));
-    m_del_server->setText(tr("Delete Server"));
-    m_start_server->setText(tr("Start Server"));
-    m_stop_server->setText(tr("Stop Server"));
-    m_edit_server->setText(tr("Edit Server"));
-    addAction(m_new_server);
-    addAction(m_del_server);
-    addAction(m_start_server);
-    addAction(m_stop_server);
-    addAction(m_edit_server);
+    m_new->setText(tr("New Server"));
+    m_delete->setText(tr("Delete Server"));
+    m_start->setText(tr("Start Server"));
+    m_stop->setText(tr("Stop Server"));
+    addAction(m_new);
+    addAction(m_start);
+    addAction(m_stop);
+    addAction(m_delete);
 }
