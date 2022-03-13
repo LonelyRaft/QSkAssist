@@ -1,6 +1,7 @@
 
 #include <qdebug.h>
 #include "sktree.h"
+#include "skdialog.h"
 
 SkTreeView::SkTreeView(QWidget *parent) : QTreeView(parent)
 {
@@ -32,6 +33,11 @@ void SkTreeView::onCtxMenu(const QPoint &pos)
 void SkTreeView::onNew(bool checked)
 {
     qDebug() << "onNew Server\n";
+    SkDlgServer server;
+    if (server.exec() == QDialog::Accepted)
+    {
+        qDebug() << "close server\n";
+    }
 }
 
 void SkTreeView::onStart(bool checked)

@@ -1,6 +1,7 @@
 
 #include <qdebug.h>
 #include "sklist.h"
+#include "skdialog.h"
 
 SkListView::SkListView(QWidget *parent) : QListView(parent)
 {
@@ -32,6 +33,11 @@ void SkListView::onCtxMenu(const QPoint &pos)
 void SkListView::onNew(bool checked)
 {
     qDebug() << "onNew Client\n";
+    SkDlgClient client;
+    if (client.exec() == QDialog::Accepted)
+    {
+        qDebug() << "close client\n";
+    }
 }
 
 void SkListView::onStart(bool checked)
