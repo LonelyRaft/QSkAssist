@@ -15,6 +15,8 @@ SkDlgServer::SkDlgServer(QWidget *parent) : QDialog(parent)
     m_clear = new QPushButton;
     m_layout = new QGridLayout;
     initUserIF();
+    connect(m_create, &QPushButton::clicked,
+            this, &SkDlgServer::accept);
 }
 
 SkDlgServer::~SkDlgServer()
@@ -59,6 +61,12 @@ void SkDlgServer::initUserIF(void)
     setLayout(m_layout);
 }
 
+int SkDlgServer::getServerConfig(ServerConfig &config)
+{
+    config.m_name = m_name->text();
+    return 0;
+}
+
 SkDlgClient::SkDlgClient(QWidget *parent) : QDialog(parent)
 {
     m_labName = new QLabel;
@@ -76,6 +84,8 @@ SkDlgClient::SkDlgClient(QWidget *parent) : QDialog(parent)
     m_clear = new QPushButton;
     m_layout = new QGridLayout;
     initUserIF();
+    connect(m_create, &QPushButton::clicked,
+            this, &SkDlgServer::accept);
 }
 
 SkDlgClient::~SkDlgClient()
@@ -127,4 +137,10 @@ void SkDlgClient::initUserIF(void)
     m_layout->addWidget(m_create, 6, 1, 1, 4);
     m_layout->addWidget(m_clear, 6, 5, 1, 4);
     setLayout(m_layout);
+}
+
+int SkDlgClient::getClientConfig(ClientConfig &config)
+{
+    config.m_name = m_name->text();
+    return 0;
 }

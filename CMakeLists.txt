@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED on)
 find_package(Qt5 COMPONENTS Widgets)
 find_package(Qt5 COMPONENTS Network)
 
+set(QSKA_LOGIC QSkLogic)
+add_subdirectory(logic)
 set(QSKA_USERIF QSkUserIF)
 add_subdirectory(userif)
 
@@ -21,4 +23,5 @@ add_executable(${PROJECT_NAME}
     main.cpp)
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC ${QSKA_USERIF})
+    PUBLIC ${QSKA_USERIF}
+    PUBLIC ${QSKA_LOGIC})

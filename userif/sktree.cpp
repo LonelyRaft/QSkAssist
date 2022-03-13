@@ -2,6 +2,7 @@
 #include <qdebug.h>
 #include "sktree.h"
 #include "skdialog.h"
+#include "skconfig.h"
 
 SkTreeView::SkTreeView(QWidget *parent) : QTreeView(parent)
 {
@@ -34,9 +35,10 @@ void SkTreeView::onNew(bool checked)
 {
     qDebug() << "onNew Server\n";
     SkDlgServer server;
+    ServerConfig config;
     if (server.exec() == QDialog::Accepted)
     {
-        qDebug() << "close server\n";
+        server.getServerConfig(config);
     }
 }
 

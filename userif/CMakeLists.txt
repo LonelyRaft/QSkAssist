@@ -8,3 +8,5 @@ add_library(${QSKA_USERIF}
 target_link_libraries(${QSKA_USERIF} PUBLIC Qt5::Widgets)
 target_include_directories(${QSKA_USERIF} 
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${QSKA_USERIF} 
+    PUBLIC "${PROJECT_SOURCE_DIR}/logic")

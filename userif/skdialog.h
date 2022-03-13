@@ -8,12 +8,15 @@
 #include <qdialog.h>
 #include <qpushbutton.h>
 #include <qgridlayout.h>
+#include <qstring.h>
+#include "skconfig.h"
 
 class SkDlgClient : public QDialog
 {
 public:
     SkDlgClient(QWidget *parent = 0);
     ~SkDlgClient();
+    int getClientConfig(ClientConfig &config);
 
 private:
     QLabel *m_labName;
@@ -38,6 +41,7 @@ class SkDlgServer : public QDialog
 public:
     SkDlgServer(QWidget *parent = 0);
     ~SkDlgServer();
+    int getServerConfig(ServerConfig &config);
 
 private:
     QLabel *m_labName;
