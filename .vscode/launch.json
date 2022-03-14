@@ -5,7 +5,14 @@
             "name": "QSkAssist",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/sparrow9/QSkAssist/build/QSkAssist",
+            "windows": {
+                "program": "F:/MyProject/QSkAssist/build/QSkAssist.exe",
+                "miDebuggerPath": "D:/Compilers/mingw64/posix/sjlj/bin/gdb.exe"
+            },
+            "linux": {
+                "program": "/home/sparrow9/QSkAssist/build/QSkAssist",
+                "miDebuggerPath": "/usr/bin/gdb"
+            },
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -25,7 +32,6 @@
                 }
             ],
             "preLaunchTask": "build",
-            "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
 }
