@@ -7,7 +7,7 @@
             "request": "launch",
             "windows": {
                 "program": "F:/MyProject/QSkAssist/build/QSkAssist.exe",
-                "miDebuggerPath": "D:/Compilers/mingw64/posix/sjlj/bin/gdb.exe"
+                "miDebuggerPath": "D:/Qt5.12.9/Tools/mingw730_64/bin/gdb.exe"
             },
             "linux": {
                 "program": "/home/sparrow9/QSkAssist/build/QSkAssist",

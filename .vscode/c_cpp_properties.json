@@ -85,7 +85,7 @@
                 "D:/Qt5.12.9/5.12.9/mingw73_64/include"
             ],
             "defines": [],
-            "compilerPath": "D:/Compilers/mingw64/posix/sjlj/bin/g++.exe",
+            "compilerPath": "D:/Qt5.12.9/Tools/mingw730_64/bin/g++.exe",
             "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-gcc-x64"
