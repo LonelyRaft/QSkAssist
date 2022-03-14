@@ -8,7 +8,6 @@
 #include <qsplitter.h>
 #include <qtabwidget.h>
 #include "sktree.h"
-#include "sklist.h"
 #include "skdata.h"
 
 class SkMainWindow : public QMainWindow
@@ -20,8 +19,8 @@ public:
 private:
     QStatusBar *m_status;
     QTabWidget *m_data;
-    SkTreeView *m_server;
-    SkListView *m_client;
+    SkServerTree *m_server;
+    SkClientTree *m_client;
     QSplitter *m_links;
     QGridLayout *m_layout;
     QWidget *m_content;

@@ -7,11 +7,11 @@
 #include <qmenu.h>
 #include <qaction.h>
 
-class SkTreeView : public QTreeView
+class SkServerTree : public QTreeView
 {
 public:
-    SkTreeView(QWidget *parent = 0);
-    ~SkTreeView();
+    SkServerTree(QWidget *parent = 0);
+    ~SkServerTree();
 public slots:
     void onCtxMenu(const QPoint &pos);
     void onNew(bool);
@@ -25,11 +25,29 @@ private:
     void initUserIF(void);
 };
 
-class SkTreeMenu : public QMenu
+class SkClientTree : public QTreeView
 {
 public:
-    SkTreeMenu(QWidget *parent = 0);
-    ~SkTreeMenu();
+    SkClientTree(QWidget *parent = 0);
+    ~SkClientTree();
+public slots:
+    void onCtxMenu(const QPoint &pos);
+    void onNew(bool);
+    void onStart(bool);
+    void onStop(bool);
+    void onDelete(bool);
+    // void onRefresh(bool);
+
+private:
+    QStandardItemModel *m_model;
+    void initUserIF(void);
+};
+
+class SkServerMenu : public QMenu
+{
+public:
+    SkServerMenu(QWidget *parent = 0);
+    ~SkServerMenu();
 
 private:
     QAction *m_acts;
@@ -38,7 +56,24 @@ private:
     QAction *m_stop;
     QAction *m_delete;
     // QAction *m_refresh;
-    friend class SkTreeView;
+    friend class SkServerTree;
+    void initUserIF(void);
+};
+
+class SkClientMenu : public QMenu
+{
+public:
+    SkClientMenu(QWidget *parent = 0);
+    ~SkClientMenu();
+
+private:
+    QAction *m_acts;
+    QAction *m_new;
+    QAction *m_start;
+    QAction *m_stop;
+    QAction *m_delete;
+    // QAction *m_refresh;
+    friend class SkClientTree;
     void initUserIF(void);
 };
 

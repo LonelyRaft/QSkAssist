@@ -5,8 +5,8 @@ SkMainWindow::SkMainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     m_status = new QStatusBar(parent);
-    m_server = new SkTreeView(parent);
-    m_client = new SkListView(parent);
+    m_server = new SkServerTree(parent);
+    m_client = new SkClientTree(parent);
     m_links = new QSplitter(Qt::Vertical, parent);
     m_data = new QTabWidget(parent);
     m_content = new QWidget(parent);
