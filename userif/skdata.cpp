@@ -16,8 +16,8 @@ SkData::SkData(QWidget *parent) : QWidget(parent)
     m_recv = new QWidget(this);
     m_send = new QWidget(this);
     m_splitter = new QSplitter(Qt::Vertical, this);
+    m_grid = new QGridLayout;
     initUserIF();
-    // setSizePolicy(QSizePolicy::Expanding);
 }
 
 SkData::~SkData()
@@ -57,4 +57,6 @@ void SkData::initUserIF(void)
 
     m_splitter->addWidget(m_send);
     m_splitter->addWidget(m_recv);
+    m_grid->addWidget(m_splitter);
+    setLayout(m_grid);
 }

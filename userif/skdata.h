@@ -8,6 +8,7 @@
 #include <qtoolbar.h>
 #include <qtextedit.h>
 #include <qboxlayout.h>
+#include <qgridlayout.h>
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
 
@@ -32,6 +33,7 @@ private:
     QWidget *m_recv;
     QWidget *m_send;
     QSplitter *m_splitter;
+    QGridLayout *m_grid;
     friend class SkMainWindow;
     void initUserIF(void);
 };
