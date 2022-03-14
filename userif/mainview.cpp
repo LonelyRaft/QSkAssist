@@ -49,4 +49,6 @@ void SkMainWindow::addServer(ServerConfig *config)
 
 void SkMainWindow::addClient(ClientConfig *config)
 {
+    SkData *data = new SkData(this);
+    m_data->addTab(data, config->m_name);
 }

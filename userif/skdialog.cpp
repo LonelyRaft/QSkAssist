@@ -158,6 +158,24 @@ void SkDlgClient::initUserIF(void)
 
 int SkDlgClient::getClientConfig(ClientConfig *config)
 {
-    config->m_name = m_name->text();
+    ClientConfig client;
+    client.m_host = m_host->text();
+    client.m_port = m_port1->text();
+    client.m_type = m_type->currentText();
+    if (client.m_host.isEmpty() ||
+        client.m_port.isEmpty())
+        return -1;
+    if (client.m_name.isEmpty())
+    {
+        client.m_name =
+            QString("%1:%2(%3)")
+                .arg(client.m_type)
+                .arg(client.m_host)
+                .arg(client.m_port);
+    }
+    config->m_name = client.m_name;
+    config->m_host = client.m_host;
+    config->m_port = client.m_port;
+    config->m_type = client.m_type;
     return 0;
 }
