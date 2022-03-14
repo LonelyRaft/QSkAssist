@@ -12,7 +12,9 @@ struct ClientConfig
 struct ServerConfig
 {
     QString m_name;
+    QString m_host;
+    QString m_port;
+    QString m_type;
 };
-
 
 #endif // Q_SOCKET_ASSISTANT_CONFIG

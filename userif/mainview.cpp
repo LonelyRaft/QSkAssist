@@ -1,5 +1,6 @@
 
 #include "mainview.h"
+#include "skdata.h"
 
 SkMainWindow::SkMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,6 +13,10 @@ SkMainWindow::SkMainWindow(QWidget *parent)
     m_content = new QWidget(parent);
     m_layout = new QGridLayout();
     initUserIF();
+    connect(m_server, &SkServerTree::addServer,
+            this, &SkMainWindow::addServer);
+    connect(m_client, &SkClientTree::addClient,
+            this, &SkMainWindow::addClient);
 }
 
 SkMainWindow::~SkMainWindow()
@@ -34,4 +39,14 @@ void SkMainWindow::initUserIF(void)
     m_layout->addWidget(m_data, 0, 2, 10, 8);
     m_content->setLayout(m_layout);
     setCentralWidget(m_content);
+}
+
+void SkMainWindow::addServer(ServerConfig *config)
+{
+    SkData *data = new SkData(this);
+    m_data->addTab(data, config->m_name);
+}
+
+void SkMainWindow::addClient(ClientConfig *config)
+{
 }

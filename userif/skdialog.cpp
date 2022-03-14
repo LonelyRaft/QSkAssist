@@ -61,9 +61,26 @@ void SkDlgServer::initUserIF(void)
     setLayout(m_layout);
 }
 
-int SkDlgServer::getServerConfig(ServerConfig &config)
+int SkDlgServer::getServerConfig(ServerConfig *config)
 {
-    config.m_name = m_name->text();
+    ServerConfig server;
+    server.m_type = m_type->currentText();
+    server.m_host = m_host->text();
+    server.m_port = m_port->text();
+    server.m_name = m_name->text();
+    if (server.m_host.isEmpty() ||
+        server.m_port.isEmpty())
+        return -1;
+    if (server.m_name.isEmpty())
+        server.m_name =
+            QString("%1:%2(%3)")
+                .arg(server.m_type)
+                .arg(server.m_host)
+                .arg(server.m_port);
+    config->m_type = server.m_type;
+    config->m_host = server.m_host;
+    config->m_port = server.m_port;
+    config->m_name = server.m_name;
     return 0;
 }
 
@@ -139,8 +156,8 @@ void SkDlgClient::initUserIF(void)
     setLayout(m_layout);
 }
 
-int SkDlgClient::getClientConfig(ClientConfig &config)
+int SkDlgClient::getClientConfig(ClientConfig *config)
 {
-    config.m_name = m_name->text();
+    config->m_name = m_name->text();
     return 0;
 }

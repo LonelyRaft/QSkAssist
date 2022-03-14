@@ -2,7 +2,6 @@
 #include <qdebug.h>
 #include "sktree.h"
 #include "skdialog.h"
-#include "skconfig.h"
 
 SkServerTree::SkServerTree(QWidget *parent) : QTreeView(parent)
 {
@@ -42,12 +41,17 @@ void SkServerTree::onCtxMenu(const QPoint &pos)
 
 void SkServerTree::onNew(bool checked)
 {
-    qDebug() << "onNew Server\n";
     SkDlgServer server;
-    ServerConfig config;
+    ServerConfig *config = new ServerConfig;
     if (server.exec() == QDialog::Accepted)
     {
-        server.getServerConfig(config);
+        if (!server.getServerConfig(config))
+        {
+            QStandardItem *item = new QStandardItem(config->m_name);
+            // item->setData(,);
+            m_model->appendRow(item);
+            emit addServer(config);
+        }
     }
 }
 
@@ -64,6 +68,7 @@ void SkServerTree::onStop(bool checked)
 void SkServerTree::onDelete(bool checked)
 {
     qDebug() << "onDelete Server\n";
+
 }
 
 // void SkServerTree::onRefresh(bool checked)
@@ -138,12 +143,15 @@ void SkClientTree::onCtxMenu(const QPoint &pos)
 
 void SkClientTree::onNew(bool checked)
 {
-    qDebug() << "onNew Client\n";
     SkDlgClient client;
-    ClientConfig config;
+    ClientConfig *config = new ClientConfig;
     if (client.exec() == QDialog::Accepted)
     {
-        client.getClientConfig(config);
+        if(!client.getClientConfig(config))
+        {
+            m_model->appendRow(new QStandardItem(config->m_name));
+            emit addClient(config);
+        }
     }
 }
 

@@ -16,7 +16,7 @@ class SkDlgClient : public QDialog
 public:
     SkDlgClient(QWidget *parent = 0);
     ~SkDlgClient();
-    int getClientConfig(ClientConfig &config);
+    int getClientConfig(ClientConfig *config);
 
 private:
     QLabel *m_labName;
@@ -41,7 +41,7 @@ class SkDlgServer : public QDialog
 public:
     SkDlgServer(QWidget *parent = 0);
     ~SkDlgServer();
-    int getServerConfig(ServerConfig &config);
+    int getServerConfig(ServerConfig *config);
 
 private:
     QLabel *m_labName;

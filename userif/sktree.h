@@ -6,14 +6,20 @@
 #include <qstandarditemmodel.h>
 #include <qmenu.h>
 #include <qaction.h>
+#include "skconfig.h"
 
 class SkServerTree : public QTreeView
 {
+    Q_OBJECT
 public:
     SkServerTree(QWidget *parent = 0);
     ~SkServerTree();
+
+signals:
+    void addServer(ServerConfig *);
+
 public slots:
-    void onCtxMenu(const QPoint &pos);
+    void onCtxMenu(const QPoint &);
     void onNew(bool);
     void onStart(bool);
     void onStop(bool);
@@ -27,11 +33,16 @@ private:
 
 class SkClientTree : public QTreeView
 {
+    Q_OBJECT
 public:
     SkClientTree(QWidget *parent = 0);
     ~SkClientTree();
+
+signals:
+    void addClient(ClientConfig *);
+
 public slots:
-    void onCtxMenu(const QPoint &pos);
+    void onCtxMenu(const QPoint &);
     void onNew(bool);
     void onStart(bool);
     void onStop(bool);

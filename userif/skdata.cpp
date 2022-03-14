@@ -3,19 +3,21 @@
 
 SkData::SkData(QWidget *parent) : QWidget(parent)
 {
-    m_label1 = new QLabel;
-    m_label2 = new QLabel;
-    m_hex1 = new QCheckBox;
-    m_hex2 = new QCheckBox;
-    m_tools1 = new QToolBar;
-    m_tools2 = new QToolBar;
-    m_data1 = new QTextEdit;
-    m_data2 = new QTextEdit;
+    m_label1 = new QLabel(this);
+    m_label2 = new QLabel(this);
+    m_hex1 = new QCheckBox(this);
+    m_hex2 = new QCheckBox(this);
+    m_tools1 = new QToolBar(this);
+    m_tools2 = new QToolBar(this);
+    m_data1 = new QTextEdit(this);
+    m_data2 = new QTextEdit(this);
     m_box1 = new QBoxLayout(QBoxLayout::TopToBottom);
     m_box2 = new QBoxLayout(QBoxLayout::TopToBottom);
-    m_recv = new QWidget;
-    m_send = new QWidget;
-    m_splitter = new QSplitter(Qt::Vertical);
+    m_recv = new QWidget(this);
+    m_send = new QWidget(this);
+    m_splitter = new QSplitter(Qt::Vertical, this);
+    initUserIF();
+    // setSizePolicy(QSizePolicy::Expanding);
 }
 
 SkData::~SkData()

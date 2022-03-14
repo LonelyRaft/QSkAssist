@@ -8,13 +8,16 @@
 #include <qsplitter.h>
 #include <qtabwidget.h>
 #include "sktree.h"
-#include "skdata.h"
 
 class SkMainWindow : public QMainWindow
 {
 public:
     SkMainWindow(QWidget *parent = 0);
     ~SkMainWindow();
+
+public slots:
+    void addServer(ServerConfig *);
+    void addClient(ClientConfig *);
 
 private:
     QStatusBar *m_status;
