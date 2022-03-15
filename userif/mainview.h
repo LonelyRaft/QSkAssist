@@ -18,8 +18,8 @@ public:
     ~SkMainWindow();
 
 public slots:
-    void addServer(ServerConfig *);
-    void addClient(ClientConfig *);
+    void addServer(SkConfig *);
+    void addClient(SkConfig *);
 
 private:
     SkMenuBar *m_menu;

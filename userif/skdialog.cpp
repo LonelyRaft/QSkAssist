@@ -1,181 +1,111 @@
 
+#include <qrandom.h>
 #include "skdialog.h"
 
-SkDlgServer::SkDlgServer(QWidget *parent) : QDialog(parent)
+SkDlgConfig::SkDlgConfig(QWidget *parent) : QDialog(parent)
 {
     m_labName = new QLabel;
     m_labType = new QLabel;
-    m_labHost = new QLabel;
-    m_labPort = new QLabel;
+    m_labHostLocal = new QLabel;
+    m_labPortLocal = new QLabel;
+    m_labHostTarget = new QLabel;
+    m_labPortTarget = new QLabel;
     m_type = new QComboBox;
-    m_name = new QLineEdit;
-    m_host = new QLineEdit;
-    m_port = new QLineEdit;
-    m_create = new QPushButton;
-    m_clear = new QPushButton;
+    m_edtName = new QLineEdit;
+    m_edtHostLocal = new QLineEdit;
+    m_edtPortLocal = new QLineEdit;
+    m_edtHostTarget = new QLineEdit;
+    m_edtPortTarget = new QLineEdit;
+    m_btnOkay = new QPushButton;
+    m_btnClear = new QPushButton;
+    m_btnRand = new QPushButton;
     m_layout = new QGridLayout;
     initUserIF();
-    connect(m_create, &QPushButton::clicked,
-            this, &SkDlgServer::accept);
+    connect(m_btnRand, &QPushButton::clicked,
+            this, &SkDlgConfig::randPort);
+    connect(m_btnOkay, &QPushButton::clicked,
+            this, &SkDlgConfig::accept);
+    connect(m_btnClear, &QPushButton::clicked,
+            this, &SkDlgConfig::clearData);
 }
 
-SkDlgServer::~SkDlgServer()
+SkDlgConfig::~SkDlgConfig()
 {
-    delete m_labName;
     delete m_labType;
-    delete m_labHost;
-    delete m_labPort;
+    delete m_labName;
+    delete m_labHostLocal;
+    delete m_labPortLocal;
+    delete m_labHostTarget;
+    delete m_labPortTarget;
     delete m_type;
-    delete m_name;
-    delete m_host;
-    delete m_port;
-    delete m_create;
-    delete m_clear;
+    delete m_edtName;
+    delete m_edtHostLocal;
+    delete m_edtPortLocal;
+    delete m_edtHostTarget;
+    delete m_edtPortTarget;
+    delete m_btnOkay;
+    delete m_btnClear;
     delete m_layout;
 }
 
-void SkDlgServer::initUserIF(void)
+void SkDlgConfig::initUserIF(void)
 {
     m_labName->setText((tr("Name:")));
     m_labName->setAlignment(Qt::AlignRight);
-    m_labType->setText(tr("Socket Type:"));
+    m_labType->setText(tr("Type:"));
     m_labType->setAlignment(Qt::AlignRight);
-    m_labHost->setText(tr("Server Host:"));
-    m_labHost->setAlignment(Qt::AlignRight);
-    m_labPort->setText(tr("Server Port:"));
-    m_labPort->setAlignment(Qt::AlignRight);
-    m_create->setText(tr("New"));
-    m_clear->setText(tr("Clear"));
+    m_labHostLocal->setText(tr("Host:"));
+    m_labHostLocal->setAlignment(Qt::AlignRight);
+    m_labPortLocal->setText(tr("Port:"));
+    m_labPortLocal->setAlignment(Qt::AlignRight);
+    m_labHostTarget->setText(tr("Target Host:"));
+    m_labHostTarget->setAlignment(Qt::AlignRight);
+    m_labPortTarget->setText(tr("Target Port:"));
+    m_labPortTarget->setAlignment(Qt::AlignRight);
+    m_btnOkay->setText(tr("&Okay"));
+    m_btnClear->setText(tr("&Clear"));
+    m_btnRand->setText(tr("&Rand"));
     m_type->addItem(tr("TCP"));
     m_type->addItem(tr("UDP"));
+
     m_layout->addWidget(m_labName, 0, 0, 1, 3);
-    m_layout->addWidget(m_name, 0, 3, 1, 7);
+    m_layout->addWidget(m_edtName, 0, 3, 1, 7);
     m_layout->addWidget(m_labType, 1, 0, 1, 3);
     m_layout->addWidget(m_type, 1, 3, 1, 7);
-    m_layout->addWidget(m_labHost, 2, 0, 1, 3);
-    m_layout->addWidget(m_host, 2, 3, 1, 7);
-    m_layout->addWidget(m_labPort, 3, 0, 1, 3);
-    m_layout->addWidget(m_port, 3, 3, 1, 7);
-    m_layout->addWidget(m_create, 4, 1, 1, 4);
-    m_layout->addWidget(m_clear, 4, 5, 1, 4);
+    m_layout->addWidget(m_labHostLocal, 2, 0, 1, 3);
+    m_layout->addWidget(m_edtHostLocal, 2, 3, 1, 7);
+    m_layout->addWidget(m_labPortLocal, 3, 0, 1, 3);
+    m_layout->addWidget(m_edtPortLocal, 3, 3, 1, 5);
+    m_layout->addWidget(m_btnRand, 3, 8, 1, 2);
+    m_layout->addWidget(m_labHostTarget, 4, 0, 1, 3);
+    m_layout->addWidget(m_edtHostTarget, 4, 3, 1, 7);
+    m_layout->addWidget(m_labPortTarget, 5, 0, 1, 3);
+    m_layout->addWidget(m_edtPortTarget, 5, 3, 1, 7);
+    m_layout->addWidget(m_btnOkay, 7, 0, 1, 5);
+    m_layout->addWidget(m_btnClear, 7, 5, 1, 5);
     setLayout(m_layout);
 }
 
-int SkDlgServer::getServerConfig(ServerConfig *config)
+void SkDlgConfig::clearData(void)
 {
-    ServerConfig server;
-    server.m_type = m_type->currentText();
-    server.m_host = m_host->text();
-    server.m_port = m_port->text();
-    server.m_name = m_name->text();
-    if (server.m_host.isEmpty() ||
-        server.m_port.isEmpty())
-        return -1;
-    if (server.m_name.isEmpty())
-        server.m_name =
-            QString("%1:%2(%3)")
-                .arg(server.m_type)
-                .arg(server.m_host)
-                .arg(server.m_port);
-    config->m_type = server.m_type;
-    config->m_host = server.m_host;
-    config->m_port = server.m_port;
-    config->m_name = server.m_name;
-    return 0;
+    m_edtName->clear();
+    m_type->setCurrentIndex(0);
+    m_edtHostLocal->clear();
+    m_edtPortLocal->clear();
+    m_edtHostTarget->clear();
+    m_edtPortTarget->clear();
 }
 
-SkDlgClient::SkDlgClient(QWidget *parent) : QDialog(parent)
+void SkDlgConfig::randPort(void)
 {
-    m_labName = new QLabel;
-    m_labType = new QLabel;
-    m_labHost = new QLabel;
-    m_labPort1 = new QLabel;
-    m_labPort2 = new QLabel;
-    m_type = new QComboBox;
-    m_name = new QLineEdit;
-    m_host = new QLineEdit;
-    m_port1 = new QLineEdit;
-    m_port2 = new QLineEdit;
-    m_rand = new QPushButton;
-    m_create = new QPushButton;
-    m_clear = new QPushButton;
-    m_layout = new QGridLayout;
-    initUserIF();
-    connect(m_create, &QPushButton::clicked,
-            this, &SkDlgServer::accept);
+    unsigned int port =
+        QRandomGenerator::global()->generate();
+    m_edtPortLocal->setText(
+        QString::number(port % 0xffff));
 }
 
-SkDlgClient::~SkDlgClient()
+int SkDlgConfig::getSocketConfig(SkConfig *config)
 {
-    delete m_labName;
-    delete m_labType;
-    delete m_labHost;
-    delete m_labPort1;
-    delete m_labPort2;
-    delete m_type;
-    delete m_name;
-    delete m_host;
-    delete m_port1;
-    delete m_port2;
-    delete m_rand;
-    delete m_create;
-    delete m_clear;
-    delete m_layout;
-}
-
-void SkDlgClient::initUserIF(void)
-{
-    m_labName->setText((tr("Name:")));
-    m_labName->setAlignment(Qt::AlignRight);
-    m_labType->setText(tr("Socket Type:"));
-    m_labType->setAlignment(Qt::AlignRight);
-    m_labHost->setText(tr("Target Host:"));
-    m_labHost->setAlignment(Qt::AlignRight);
-    m_labPort1->setText(tr("Target Port:"));
-    m_labPort1->setAlignment(Qt::AlignRight);
-    m_labPort2->setText(tr("Local Port:"));
-    m_labPort2->setAlignment(Qt::AlignRight);
-    m_rand->setText(tr("Random"));
-    m_create->setText(tr("New"));
-    m_clear->setText(tr("Clear"));
-    m_type->addItem(tr("TCP"));
-    m_type->addItem(tr("UDP"));
-    m_layout->addWidget(m_labName, 0, 0, 1, 3);
-    m_layout->addWidget(m_name, 0, 3, 1, 7);
-    m_layout->addWidget(m_labType, 1, 0, 1, 3);
-    m_layout->addWidget(m_type, 1, 3, 1, 7);
-    m_layout->addWidget(m_labHost, 2, 0, 1, 3);
-    m_layout->addWidget(m_host, 2, 3, 1, 7);
-    m_layout->addWidget(m_labPort1, 3, 0, 1, 3);
-    m_layout->addWidget(m_port1, 3, 3, 1, 7);
-    m_layout->addWidget(m_labPort2, 4, 0, 1, 3);
-    m_layout->addWidget(m_port2, 4, 3, 1, 7);
-    m_layout->addWidget(m_rand, 5, 3, 1, 5);
-    m_layout->addWidget(m_create, 6, 1, 1, 4);
-    m_layout->addWidget(m_clear, 6, 5, 1, 4);
-    setLayout(m_layout);
-}
-
-int SkDlgClient::getClientConfig(ClientConfig *config)
-{
-    ClientConfig client;
-    client.m_host = m_host->text();
-    client.m_port = m_port1->text();
-    client.m_type = m_type->currentText();
-    if (client.m_host.isEmpty() ||
-        client.m_port.isEmpty())
-        return -1;
-    if (client.m_name.isEmpty())
-    {
-        client.m_name =
-            QString("%1:%2(%3)")
-                .arg(client.m_type)
-                .arg(client.m_host)
-                .arg(client.m_port);
-    }
-    config->m_name = client.m_name;
-    config->m_host = client.m_host;
-    config->m_port = client.m_port;
-    config->m_type = client.m_type;
+    
     return 0;
 }

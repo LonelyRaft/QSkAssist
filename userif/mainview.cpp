@@ -49,13 +49,13 @@ void SkMainWindow::initUserIF(void)
     setCentralWidget(m_content);
 }
 
-void SkMainWindow::addServer(ServerConfig *config)
+void SkMainWindow::addServer(SkConfig *config)
 {
     SkData *data = new SkData(this);
     m_data->addTab(data, config->m_name);
 }
 
-void SkMainWindow::addClient(ClientConfig *config)
+void SkMainWindow::addClient(SkConfig *config)
 {
     SkData *data = new SkData(this);
     m_data->addTab(data, config->m_name);

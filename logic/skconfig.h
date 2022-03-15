@@ -4,20 +4,34 @@
 
 #include <qstring.h>
 
-struct ClientConfig
+#define SOCKET_TYPE_UDP 0x01
+#define SOCKET_TYPE_TCP 0x00
+
+class SkConfig
 {
+public:
+    unsigned int m_type;
+    unsigned int m_hLocal;
+    unsigned int m_pLocal;
     QString m_name;
-    QString m_host;
-    QString m_port;
-    QString m_type;
 };
 
-struct ServerConfig
+class UDPConfig : public SkConfig
 {
-    QString m_name;
-    QString m_host;
-    QString m_port;
-    QString m_type;
+public:
+    unsigned int m_hTarget;
+    unsigned int m_pTarget;
+};
+
+class TCPServerConfig : public SkConfig
+{
+public:
+    unsigned int m_mLocal;
+};
+
+class TCPClientConfig : public SkConfig
+{
+public:
 };
 
 #endif // Q_SOCKET_ASSISTANT_CONFIG

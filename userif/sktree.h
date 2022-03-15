@@ -16,7 +16,7 @@ public:
     ~SkServerTree();
 
 signals:
-    void addServer(ServerConfig *);
+    void addServer(SkConfig *);
 
 public slots:
     void onCtxMenu(const QPoint &);
@@ -39,7 +39,7 @@ public:
     ~SkClientTree();
 
 signals:
-    void addClient(ClientConfig *);
+    void addClient(SkConfig *);
 
 public slots:
     void onCtxMenu(const QPoint &);

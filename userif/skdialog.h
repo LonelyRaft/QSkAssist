@@ -11,49 +11,33 @@
 #include <qstring.h>
 #include "skconfig.h"
 
-class SkDlgClient : public QDialog
+class SkDlgConfig : public QDialog
 {
 public:
-    SkDlgClient(QWidget *parent = 0);
-    ~SkDlgClient();
-    int getClientConfig(ClientConfig *config);
+    SkDlgConfig(QWidget *parent = 0);
+    ~SkDlgConfig();
+    int getSocketConfig(SkConfig *);
+    QComboBox *m_type;
+    QLineEdit *m_edtName;
+
+public slots:
+    void clearData(void);
+    void randPort(void);
 
 private:
-    QLabel *m_labName;
     QLabel *m_labType;
-    QLabel *m_labHost;
-    QLabel *m_labPort1;
-    QLabel *m_labPort2;
-    QComboBox *m_type; // 协议类型
-    QLineEdit *m_name;
-    QLineEdit *m_host;   // 目标主机
-    QLineEdit *m_port1;  // 目标端口
-    QLineEdit *m_port2;  // 本地端口
-    QPushButton *m_rand; // 本地端口随机
-    QPushButton *m_create;
-    QPushButton *m_clear;
-    QGridLayout *m_layout;
-    void initUserIF(void);
-};
-
-class SkDlgServer : public QDialog
-{
-public:
-    SkDlgServer(QWidget *parent = 0);
-    ~SkDlgServer();
-    int getServerConfig(ServerConfig *config);
-
-private:
     QLabel *m_labName;
-    QLabel *m_labType;
-    QLabel *m_labHost;
-    QLabel *m_labPort;
-    QComboBox *m_type; // 协议类型
-    QLineEdit *m_name;
-    QLineEdit *m_host; // 选网卡
-    QLineEdit *m_port; // 选端口
-    QPushButton *m_create;
-    QPushButton *m_clear;
+    QLabel *m_labHostLocal;
+    QLabel *m_labPortLocal;
+    QLabel *m_labHostTarget;
+    QLabel *m_labPortTarget;
+    QLineEdit *m_edtHostLocal;
+    QLineEdit *m_edtPortLocal;
+    QLineEdit *m_edtHostTarget;
+    QLineEdit *m_edtPortTarget;
+    QPushButton *m_btnOkay;
+    QPushButton *m_btnClear;
+    QPushButton *m_btnRand;
     QGridLayout *m_layout;
     void initUserIF(void);
 };

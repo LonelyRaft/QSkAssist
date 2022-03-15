@@ -42,14 +42,23 @@ void SkServerTree::onCtxMenu(const QPoint &pos)
 
 void SkServerTree::onNew(bool checked)
 {
-    SkDlgServer server;
-    ServerConfig *config = new ServerConfig;
+    SkDlgConfig server;
     if (server.exec() == QDialog::Accepted)
     {
-        if (!server.getServerConfig(config))
+        SkConfig *config;
+        int result;
+        int type = server.m_type->currentIndex();
+        if (SOCKET_TYPE_TCP == type)
+            config = new TCPServerConfig;
+        else if (SOCKET_TYPE_UDP == type)
+            config = new UDPConfig;
+        else
+            return;
+        result = server.getSocketConfig(config);
+        if (!result)
         {
-            QStandardItem *item = new QStandardItem(config->m_name);
-            // item->setData(,);
+            QStandardItem *item =
+                new QStandardItem(config->m_name);
             m_model->appendRow(item);
             emit addServer(config);
         }
@@ -114,13 +123,23 @@ void SkClientTree::onCtxMenu(const QPoint &pos)
 
 void SkClientTree::onNew(bool checked)
 {
-    SkDlgClient client;
-    ClientConfig *config = new ClientConfig;
+    SkDlgConfig client;
     if (client.exec() == QDialog::Accepted)
     {
-        if(!client.getClientConfig(config))
+        SkConfig *config;
+        int result;
+        int type = client.m_type->currentIndex();
+        if (SOCKET_TYPE_TCP == type)
+            config = new TCPClientConfig;
+        else if (SOCKET_TYPE_UDP == type)
+            config = new UDPConfig;
+        else
+            return;
+        result = client.getSocketConfig(config);
+        if (!result)
         {
-            m_model->appendRow(new QStandardItem(config->m_name));
+            QStandardItem *item = new QStandardItem(config->m_name);
+            m_model->appendRow(item);
             emit addClient(config);
         }
     }
