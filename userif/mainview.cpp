@@ -5,6 +5,8 @@
 SkMainWindow::SkMainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    m_menu = new SkMenuBar(this);
+    m_tools = new QToolBar(parent);
     m_status = new QStatusBar(parent);
     m_server = new SkServerTree(parent);
     m_client = new SkClientTree(parent);
@@ -21,6 +23,8 @@ SkMainWindow::SkMainWindow(QWidget *parent)
 
 SkMainWindow::~SkMainWindow()
 {
+    delete m_menu;
+    delete m_tools;
     delete m_status;
     delete m_server;
     delete m_client;
@@ -32,6 +36,10 @@ SkMainWindow::~SkMainWindow()
 
 void SkMainWindow::initUserIF(void)
 {
+    m_tools->addAction(m_menu->m_actAbout);
+    m_tools->addAction(m_menu->m_actAboutQt);
+    setMenuBar(m_menu);
+    addToolBar(m_tools);
     setStatusBar(m_status);
     m_links->addWidget(m_server);
     m_links->addWidget(m_client);

@@ -54,38 +54,4 @@ private:
     void initUserIF(void);
 };
 
-class SkServerMenu : public QMenu
-{
-public:
-    SkServerMenu(QWidget *parent = 0);
-    ~SkServerMenu();
-
-private:
-    QAction *m_acts;
-    QAction *m_new;
-    QAction *m_start;
-    QAction *m_stop;
-    QAction *m_delete;
-    // QAction *m_refresh;
-    friend class SkServerTree;
-    void initUserIF(void);
-};
-
-class SkClientMenu : public QMenu
-{
-public:
-    SkClientMenu(QWidget *parent = 0);
-    ~SkClientMenu();
-
-private:
-    QAction *m_acts;
-    QAction *m_new;
-    QAction *m_start;
-    QAction *m_stop;
-    QAction *m_delete;
-    // QAction *m_refresh;
-    friend class SkClientTree;
-    void initUserIF(void);
-};
-
 #endif // Q_SOCKET_ASSISTANT_TREE

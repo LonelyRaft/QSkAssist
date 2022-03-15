@@ -2,6 +2,7 @@
 add_library(${QSKA_USERIF} 
     mainview.cpp
     sktree.cpp
+    skmenu.cpp
     skdata.cpp
     skdialog.cpp)
 target_link_libraries(${QSKA_USERIF} 

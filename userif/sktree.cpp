@@ -1,6 +1,7 @@
 
 #include <qdebug.h>
 #include "sktree.h"
+#include "skmenu.h"
 #include "skdialog.h"
 
 SkServerTree::SkServerTree(QWidget *parent) : QTreeView(parent)
@@ -68,42 +69,12 @@ void SkServerTree::onStop(bool checked)
 void SkServerTree::onDelete(bool checked)
 {
     qDebug() << "onDelete Server\n";
-
 }
 
 // void SkServerTree::onRefresh(bool checked)
 // {
 //     qDebug() << "onRefresh Server\n";
 // }
-
-SkServerMenu::SkServerMenu(QWidget *parent) : QMenu(parent)
-{
-    m_acts = new QAction[4];
-    m_new = m_acts;
-    m_delete = m_acts + 1;
-    m_start = m_acts + 2;
-    m_stop = m_acts + 3;
-    initUserIF();
-}
-
-SkServerMenu::~SkServerMenu()
-{
-    delete[] m_acts;
-}
-
-void SkServerMenu::initUserIF(void)
-{
-    m_new->setText(tr("New Server"));
-    m_delete->setText(tr("Delete Server"));
-    m_start->setText(tr("Start Server"));
-    m_stop->setText(tr("Stop Server"));
-    // m_refresh->setText(tr("Refresh Server"));
-    addAction(m_new);
-    addAction(m_start);
-    addAction(m_stop);
-    addAction(m_delete);
-    // addAction(m_refresh);
-}
 
 SkClientTree::SkClientTree(QWidget *parent) : QTreeView(parent)
 {
@@ -174,32 +145,3 @@ void SkClientTree::onDelete(bool checked)
 // {
 //     qDebug() << "onRefresh Client\n";
 // }
-
-SkClientMenu::SkClientMenu(QWidget *parent) : QMenu(parent)
-{
-    m_acts = new QAction[4];
-    m_new = m_acts;
-    m_start = m_acts + 1;
-    m_stop = m_acts + 2;
-    m_delete = m_acts + 3;
-    initUserIF();
-}
-
-SkClientMenu::~SkClientMenu()
-{
-    delete[] m_acts;
-}
-
-void SkClientMenu::initUserIF(void)
-{
-    m_new->setText(tr("New Client"));
-    m_start->setText(tr("Start Client"));
-    m_stop->setText(tr("Stop Client"));
-    m_delete->setText(tr("Delete Client"));
-    // m_refresh->setText(tr("Refresh Client"));
-    addAction(m_new);
-    addAction(m_start);
-    addAction(m_stop);
-    addAction(m_delete);
-    // addAction(m_refresh);
-}

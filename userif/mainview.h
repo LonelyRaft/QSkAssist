@@ -4,10 +4,12 @@
 
 #include <qmainwindow.h>
 #include <qgridlayout.h>
+#include <qtoolbar.h>
 #include <qstatusbar.h>
 #include <qsplitter.h>
 #include <qtabwidget.h>
 #include "sktree.h"
+#include "skmenu.h"
 
 class SkMainWindow : public QMainWindow
 {
@@ -20,6 +22,8 @@ public slots:
     void addClient(ClientConfig *);
 
 private:
+    SkMenuBar *m_menu;
+    QToolBar *m_tools;
     QStatusBar *m_status;
     QTabWidget *m_data;
     SkServerTree *m_server;
