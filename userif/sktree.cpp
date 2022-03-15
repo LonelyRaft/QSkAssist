@@ -46,16 +46,20 @@ void SkServerTree::onNew(bool checked)
     if (server.exec() == QDialog::Accepted)
     {
         SkConfig *config;
-        int result;
         int type = server.m_type->currentIndex();
         if (SOCKET_TYPE_TCP == type)
+        {
             config = new TCPServerConfig;
+            server.getTcpServer(config);
+        }
         else if (SOCKET_TYPE_UDP == type)
+        {
             config = new UDPConfig;
+            server.getUdpSocket(config);
+        }
         else
             return;
-        result = server.getSocketConfig(config);
-        if (!result)
+        if (!config->verify())
         {
             QStandardItem *item =
                 new QStandardItem(config->m_name);
@@ -127,16 +131,20 @@ void SkClientTree::onNew(bool checked)
     if (client.exec() == QDialog::Accepted)
     {
         SkConfig *config;
-        int result;
         int type = client.m_type->currentIndex();
         if (SOCKET_TYPE_TCP == type)
+        {
             config = new TCPClientConfig;
+            client.getTcpClient(config);
+        }
         else if (SOCKET_TYPE_UDP == type)
+        {
             config = new UDPConfig;
+            client.getUdpSocket(config);
+        }
         else
             return;
-        result = client.getSocketConfig(config);
-        if (!result)
+        if (!config->verify())
         {
             QStandardItem *item = new QStandardItem(config->m_name);
             m_model->appendRow(item);

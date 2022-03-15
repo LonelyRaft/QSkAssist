@@ -16,7 +16,10 @@ class SkDlgConfig : public QDialog
 public:
     SkDlgConfig(QWidget *parent = 0);
     ~SkDlgConfig();
-    int getSocketConfig(SkConfig *);
+    void getSocketConfig(SkConfig *);
+    void getTcpClient(SkConfig *);
+    void getTcpServer(SkConfig *);
+    void getUdpSocket(SkConfig *);
     QComboBox *m_type;
     QLineEdit *m_edtName;
 

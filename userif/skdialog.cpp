@@ -104,8 +104,101 @@ void SkDlgConfig::randPort(void)
         QString::number(port % 0xffff));
 }
 
-int SkDlgConfig::getSocketConfig(SkConfig *config)
+void SkDlgConfig::getSocketConfig(SkConfig *config)
 {
-    
-    return 0;
+    if (0 == config)
+        return;
+    QString var_type = m_type->currentText();
+    QString var_name = m_edtName->text();
+    QString var_hLocal = m_edtHostLocal->text();
+    QString var_pLocal = m_edtPortLocal->text();
+    config->m_name = var_name;
+    config->m_type = m_type->currentIndex();
+    config->m_hLocal = SkConfig::ip2num(var_hLocal);
+    config->m_pLocal = var_pLocal.toUInt();
+    if (var_name.isEmpty())
+    {
+        config->m_name =
+            QString("%1:%2(%3)")
+                .arg(var_type)
+                .arg(var_hLocal)
+                .arg(var_pLocal);
+    }
+}
+
+void SkDlgConfig::getTcpClient(SkConfig *config)
+{
+    if (0 == config)
+        return;
+    TCPClientConfig *tcpconfig = (TCPClientConfig *)config;
+    QString var_type = m_type->currentText();
+    QString var_name = m_edtName->text();
+    QString var_hLocal = m_edtHostLocal->text();
+    QString var_pLocal = m_edtPortLocal->text();
+    QString var_hTarget = m_edtHostTarget->text();
+    QString var_pTarget = m_edtPortTarget->text();
+    tcpconfig->m_name = var_name;
+    tcpconfig->m_type = m_type->currentIndex();
+    tcpconfig->m_hLocal = SkConfig::ip2num(var_hLocal);
+    tcpconfig->m_pLocal = var_pLocal.toUInt();
+    tcpconfig->m_hTarget = SkConfig::ip2num(var_hTarget);
+    tcpconfig->m_pTarget = var_pTarget.toUInt();
+    if (var_name.isEmpty())
+    {
+        config->m_name =
+            QString("%1:%2(%3)")
+                .arg(var_type)
+                .arg(var_hTarget)
+                .arg(var_pTarget);
+    }
+}
+
+void SkDlgConfig::getTcpServer(SkConfig *config)
+{
+    if (0 == config)
+        return;
+    TCPServerConfig *tcpconfig = (TCPServerConfig *)config;
+    QString var_type = m_type->currentText();
+    QString var_name = m_edtName->text();
+    QString var_hLocal = m_edtHostLocal->text();
+    QString var_pLocal = m_edtPortLocal->text();
+    tcpconfig->m_name = var_name;
+    tcpconfig->m_type = m_type->currentIndex();
+    tcpconfig->m_hLocal = SkConfig::ip2num(var_hLocal);
+    tcpconfig->m_pLocal = var_pLocal.toUInt();
+    if (var_name.isEmpty())
+    {
+        config->m_name =
+            QString("%1:%2(%3)")
+                .arg(var_type)
+                .arg(var_hLocal)
+                .arg(var_pLocal);
+    }
+}
+
+void SkDlgConfig::getUdpSocket(SkConfig *config)
+{
+    if (0 == config)
+        return;
+    UDPConfig *udpconfig = (UDPConfig *)config;
+    QString var_type = m_type->currentText();
+    QString var_name = m_edtName->text();
+    QString var_hLocal = m_edtHostLocal->text();
+    QString var_pLocal = m_edtPortLocal->text();
+    QString var_hTarget = m_edtHostTarget->text();
+    QString var_pTarget = m_edtPortTarget->text();
+    udpconfig->m_name = var_name;
+    udpconfig->m_type = m_type->currentIndex();
+    udpconfig->m_hLocal = SkConfig::ip2num(var_hLocal);
+    udpconfig->m_pLocal = var_pLocal.toUInt();
+    udpconfig->m_hTarget = SkConfig::ip2num(var_hLocal);
+    udpconfig->m_pTarget = var_pTarget.toUInt();
+    if (var_name.isEmpty())
+    {
+        config->m_name =
+            QString("%1:%2(%3)")
+                .arg(var_type)
+                .arg(var_hTarget)
+                .arg(var_pTarget);
+    }
 }
