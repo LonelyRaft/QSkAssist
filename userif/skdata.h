@@ -2,6 +2,7 @@
 #ifndef Q_SOCKET_ASSISTANT_DATA
 #define Q_SOCKET_ASSISTANT_DATA
 
+#include <qthread.h>
 #include <qsplitter.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -11,6 +12,7 @@
 #include <qgridlayout.h>
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
+#include "sktest.h"
 
 class SkMainWindow;
 class SkData : public QWidget
@@ -20,10 +22,14 @@ public:
     ~SkData();
 
 private:
+    QThread *m_worker;
+    SkTest *m_test;
     QLabel *m_label1;
     QLabel *m_label2;
     QCheckBox *m_hex1;
     QCheckBox *m_hex2;
+    QToolButton *m_clear1;
+    QToolButton *m_clear2;
     QToolBar *m_tools1;
     QToolBar *m_tools2;
     QTextEdit *m_data1;
