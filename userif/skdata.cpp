@@ -1,7 +1,7 @@
 
 #include "skdata.h"
 
-SkData::SkData(QWidget *parent) : QWidget(parent)
+SkData::SkData(SkConfig *config, QWidget *parent) : QWidget(parent)
 {
     m_label1 = new QLabel(this);
     m_label2 = new QLabel(this);
@@ -19,6 +19,7 @@ SkData::SkData(QWidget *parent) : QWidget(parent)
     m_send = new QWidget(this);
     m_splitter = new QSplitter(Qt::Vertical, this);
     m_grid = new QGridLayout;
+    m_config = config;
     m_worker = new QThread;
     m_test = new SkTest;
     initUserIF();
@@ -86,4 +87,3 @@ void SkData::initUserIF(void)
     m_grid->addWidget(m_splitter);
     setLayout(m_grid);
 }
-

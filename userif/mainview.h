@@ -20,6 +20,8 @@ public:
 public slots:
     void addServer(SkConfig *);
     void addClient(SkConfig *);
+    void removeClient(SkConfig *);
+    void removeServer(SkConfig *);
 
 private:
     SkMenuBar *m_menu;

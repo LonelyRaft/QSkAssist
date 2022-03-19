@@ -2,6 +2,7 @@
 #ifndef Q_SOCKET_ASSISTANT_CONFIG
 #define Q_SOCKET_ASSISTANT_CONFIG
 
+#include <qvariant.h>
 #include <qstring.h>
 
 #define SOCKET_TYPE_UDP 0x01
@@ -18,6 +19,7 @@ public:
     static QString num2ip(const unsigned int src);
     int verify(void);
 };
+Q_DECLARE_METATYPE(SkConfig*)
 
 class UDPConfig : public SkConfig
 {

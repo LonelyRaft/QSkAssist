@@ -13,16 +13,18 @@
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
 #include "sktest.h"
+#include "skconfig.h"
 
 class SkMainWindow;
 class SkData : public QWidget
 {
 public:
-    SkData(QWidget *parent = 0);
+    SkData(SkConfig *config = 0, QWidget *parent = 0);
     ~SkData();
 
 private:
     QThread *m_worker;
+    SkConfig *m_config;
     SkTest *m_test;
     QLabel *m_label1;
     QLabel *m_label2;

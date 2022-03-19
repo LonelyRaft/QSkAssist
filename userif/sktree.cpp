@@ -63,6 +63,7 @@ void SkServerTree::onNew(bool checked)
         {
             QStandardItem *item =
                 new QStandardItem(config->m_name);
+            item->setData(QVariant::fromValue(config), SERVER_ROLE);
             m_model->appendRow(item);
             emit addServer(config);
         }
@@ -81,7 +82,13 @@ void SkServerTree::onStop(bool checked)
 
 void SkServerTree::onDelete(bool checked)
 {
-    qDebug() << "onDelete Server\n";
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+        SkConfig *config = index.data(SERVER_ROLE).value<SkConfig *>();
+        m_model->removeRow(index.row());
+        emit removeServer(config);
+    }
 }
 
 // void SkServerTree::onRefresh(bool checked)
@@ -147,6 +154,7 @@ void SkClientTree::onNew(bool checked)
         if (!config->verify())
         {
             QStandardItem *item = new QStandardItem(config->m_name);
+            item->setData(QVariant::fromValue(config), CLIENT_ROLE);
             m_model->appendRow(item);
             emit addClient(config);
         }
@@ -165,7 +173,13 @@ void SkClientTree::onStop(bool checked)
 
 void SkClientTree::onDelete(bool checked)
 {
-    qDebug() << "onDelete Client\n";
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+        SkConfig *config = index.data(CLIENT_ROLE).value<SkConfig *>();
+        m_model->removeRow(index.row());
+        emit removeClient(config);
+    }
 }
 
 // void SkClientTree::onRefresh(bool checked)

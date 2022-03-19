@@ -1,4 +1,5 @@
 
+#include <qdebug.h>
 #include "mainview.h"
 #include "skdata.h"
 
@@ -17,8 +18,12 @@ SkMainWindow::SkMainWindow(QWidget *parent)
     initUserIF();
     connect(m_server, &SkServerTree::addServer,
             this, &SkMainWindow::addServer);
+    connect(m_server, &SkServerTree::removeServer,
+            this, &SkMainWindow::removeServer);
     connect(m_client, &SkClientTree::addClient,
             this, &SkMainWindow::addClient);
+    connect(m_client, &SkClientTree::removeClient,
+            this, &SkMainWindow::removeClient);
 }
 
 SkMainWindow::~SkMainWindow()
@@ -51,12 +56,44 @@ void SkMainWindow::initUserIF(void)
 
 void SkMainWindow::addServer(SkConfig *config)
 {
-    SkData *data = new SkData(this);
+    SkData *data = new SkData(config, this);
     m_data->addTab(data, config->m_name);
+}
+
+void SkMainWindow::removeServer(SkConfig *config)
+{
+    SkData *data;
+    int cnt = m_data->count();
+    for (int idx = 0; idx < cnt; idx++)
+    {
+        data = (SkData *)m_data->widget(idx);
+        if (config == data->m_config)
+        {
+            m_data->removeTab(idx);
+            // emit signal;
+            break;
+        }
+    }
 }
 
 void SkMainWindow::addClient(SkConfig *config)
 {
-    SkData *data = new SkData(this);
+    SkData *data = new SkData(config, this);
     m_data->addTab(data, config->m_name);
+}
+
+void SkMainWindow::removeClient(SkConfig *config)
+{
+    SkData *data;
+    int cnt = m_data->count();
+    for (int idx = 0; idx < cnt; idx++)
+    {
+        data = (SkData *)m_data->widget(idx);
+        if (config == data->m_config)
+        {
+            m_data->removeTab(idx);
+            // emit signal;
+            break;
+        }
+    }
 }

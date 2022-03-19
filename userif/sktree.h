@@ -10,6 +10,7 @@
 
 class SkServerTree : public QTreeView
 {
+#define SERVER_ROLE 0x102
     Q_OBJECT
 public:
     SkServerTree(QWidget *parent = 0);
@@ -17,6 +18,7 @@ public:
 
 signals:
     void addServer(SkConfig *);
+    void removeServer(SkConfig *);
 
 public slots:
     void onCtxMenu(const QPoint &);
@@ -33,6 +35,7 @@ private:
 
 class SkClientTree : public QTreeView
 {
+#define CLIENT_ROLE 0x101
     Q_OBJECT
 public:
     SkClientTree(QWidget *parent = 0);
@@ -40,6 +43,7 @@ public:
 
 signals:
     void addClient(SkConfig *);
+    void removeClient(SkConfig *);
 
 public slots:
     void onCtxMenu(const QPoint &);
