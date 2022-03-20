@@ -26,13 +26,10 @@ SkData::SkData(SkConfig *config, QWidget *parent) : QWidget(parent)
             m_dataSend, &QTextEdit::clear);
     connect(m_clearRecv, &QToolButton::clicked,
             m_dataRecv, &QTextEdit::clear);
-    m_worker.start();
 }
 
 SkData::~SkData()
 {
-    m_worker.quit();
-    m_worker.wait();
     delete m_labelSend;
     delete m_labelRecv;
     delete m_clearSend;
@@ -85,4 +82,26 @@ void SkData::initUserIF(void)
     m_splitter.addWidget(m_recv);
     m_grid.addWidget(&m_splitter);
     setLayout(&m_grid);
+}
+
+SkDataTcpServer::SkDataTcpServer(
+    SkConfig *config, QWidget *parent) : SkData(config, parent)
+{
+    // m_server.moveToThread(&m_worker);
+    // m_worker.start();
+}
+
+SkDataTcpServer::~SkDataTcpServer()
+{
+    m_worker.quit();
+    m_worker.wait();
+}
+
+SkDataTcpCleint::SkDataTcpCleint(
+    SkConfig *config, QWidget *parent) : SkData(config, parent)
+{
+}
+
+SkDataTcpCleint::~SkDataTcpCleint()
+{
 }

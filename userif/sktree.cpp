@@ -56,12 +56,22 @@ void SkServerTree::onNew(bool checked)
 
 void SkServerTree::onStart(bool checked)
 {
-    qDebug() << "onStart Server\n";
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+        SkConfig *config = index.data(SERVER_ROLE).value<SkConfig *>();
+        emit startServer(config);
+    }
 }
 
 void SkServerTree::onStop(bool checked)
 {
-    qDebug() << "onStop Server\n";
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+        SkConfig *config = index.data(SERVER_ROLE).value<SkConfig *>();
+        emit stopServer(config);
+    }
 }
 
 void SkServerTree::onDelete(bool checked)
@@ -132,12 +142,22 @@ void SkClientTree::onNew(bool checked)
 
 void SkClientTree::onStart(bool checked)
 {
-    qDebug() << "onStart Client\n";
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+        SkConfig *config = index.data(CLIENT_ROLE).value<SkConfig *>();
+        emit startClient(config);
+    }
 }
 
 void SkClientTree::onStop(bool checked)
 {
-    qDebug() << "onStop Client\n";
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+        SkConfig *config = index.data(CLIENT_ROLE).value<SkConfig *>();
+        emit stopClient(config);
+    }
 }
 
 void SkClientTree::onDelete(bool checked)

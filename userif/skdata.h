@@ -24,7 +24,7 @@ public:
     SkData(SkConfig *config = 0, QWidget *parent = 0);
     ~SkData();
 
-private:
+protected:
     QThread m_worker;
     SkConfig *m_config;
     QLabel *m_labelSend;
@@ -48,6 +48,29 @@ private:
     QGridLayout m_grid;
     friend class SkMainWindow;
     void initUserIF(void);
+};
+
+class SkDataTcpServer : public SkData
+{
+public:
+    SkDataTcpServer(SkConfig *config = 0, QWidget *parent = 0);
+    ~SkDataTcpServer();
+    inline void startListen(void)
+    {
+        m_server.startListen();
+    }
+
+private:
+    SkTcpServer m_server;
+};
+
+class SkDataTcpCleint : public SkData
+{
+public:
+    SkDataTcpCleint(SkConfig *config = 0, QWidget *parent = 0);
+    ~SkDataTcpCleint();
+
+private:
 };
 
 #endif // Q_SOCKET_ASSISTANT_DATA

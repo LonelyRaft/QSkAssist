@@ -1,4 +1,5 @@
 
+#include <qdebug.h>
 #include "tcpserver.h"
 
 SkTcpServer::SkTcpServer(SkConfig *config)
@@ -21,8 +22,13 @@ void SkTcpServer::startListen(void)
     if (m_config)
     {
         ServerConfig *config = (ServerConfig *)m_config;
+        if (!m_server->isListening())
         m_server->listen(QHostAddress::Any, config->m_port);
     }
+}
+
+void SkTcpServer::stopListen(void)
+{
 }
 
 void SkTcpServer::creatClient(void)
@@ -32,6 +38,7 @@ void SkTcpServer::creatClient(void)
         QTcpSocket *socket = m_server->nextPendingConnection();
         SkTcpClient *client = new SkTcpClient(socket);
         connect(client, &SkTcpClient::hasText, this, &SkTcpServer::readText);
+        m_clients.append(client);
     }
 }
 

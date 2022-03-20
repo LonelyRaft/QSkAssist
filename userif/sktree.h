@@ -18,6 +18,8 @@ public:
 
 signals:
     void addServer(SkConfig *);
+    void startServer(SkConfig *);
+    void stopServer(SkConfig *);
     void removeServer(SkConfig *);
 
 public slots:
@@ -43,6 +45,8 @@ public:
 
 signals:
     void addClient(SkConfig *);
+    void startClient(SkConfig *);
+    void stopClient(SkConfig *);
     void removeClient(SkConfig *);
 
 public slots:

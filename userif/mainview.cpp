@@ -18,10 +18,18 @@ SkMainWindow::SkMainWindow(QWidget *parent)
     initUserIF();
     connect(m_server, &SkServerTree::addServer,
             this, &SkMainWindow::addServer);
+    connect(m_server, &SkServerTree::startServer,
+            this, &SkMainWindow::startServer);
+    connect(m_server, &SkServerTree::stopServer,
+            this, &SkMainWindow::stopServer);
     connect(m_server, &SkServerTree::removeServer,
             this, &SkMainWindow::removeServer);
     connect(m_client, &SkClientTree::addClient,
             this, &SkMainWindow::addClient);
+    connect(m_client, &SkClientTree::startClient,
+            this, &SkMainWindow::startClient);
+    connect(m_client, &SkClientTree::stopClient,
+            this, &SkMainWindow::stopClient);
     connect(m_client, &SkClientTree::removeClient,
             this, &SkMainWindow::removeClient);
 }
@@ -56,21 +64,81 @@ void SkMainWindow::initUserIF(void)
 
 void SkMainWindow::addServer(SkConfig *config)
 {
-    SkData *data = new SkData(config);
-    m_data->addTab(data, config->m_name);
+    if (0 == config)
+        return;
+    switch (config->m_type)
+    {
+    case SOCKET_TYPE_TCP:
+    {
+        SkData *data = new SkDataTcpServer(config);
+        m_data->addTab(data, config->m_name);
+        m_status->showMessage(QString(
+            tr("Server Add: %1").arg(config->m_name)));
+        break;
+    }
+    case SOCKET_TYPE_UDP:
+    {
+        SkData *data = new SkData(config);
+        m_data->addTab(data, config->m_name);
+        m_status->showMessage(QString(
+            tr("Server Add: %1").arg(config->m_name)));
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void SkMainWindow::startServer(SkConfig *config)
+{
+    SkData *data;
+    int cnt = m_data->count();
+    if (0 == config)
+        return;
+    for (int idx = 0; idx < cnt; idx++)
+    {
+        data = (SkData *)m_data->widget(idx);
+        if (config == data->m_config)
+        {
+            ((SkDataTcpServer *)data)->startListen();
+            m_status->showMessage(QString(
+                tr("Server Start: %1").arg(config->m_name)));
+            break;
+        }
+    }
+}
+
+void SkMainWindow::stopServer(SkConfig *config)
+{
+    SkData *data;
+    int cnt = m_data->count();
+    if (0 == config)
+        return;
+    for (int idx = 0; idx < cnt; idx++)
+    {
+        data = (SkData *)m_data->widget(idx);
+        if (config == data->m_config)
+        {
+
+            break;
+        }
+    }
 }
 
 void SkMainWindow::removeServer(SkConfig *config)
 {
     SkData *data;
     int cnt = m_data->count();
+    if (0 == config)
+        return;
     for (int idx = 0; idx < cnt; idx++)
     {
         data = (SkData *)m_data->widget(idx);
         if (config == data->m_config)
         {
             m_data->removeTab(idx);
-            // emit signal;
+            m_status->showMessage(QString(
+                tr("Server Remove: %1").arg(config->m_name)));
             break;
         }
     }
@@ -78,21 +146,57 @@ void SkMainWindow::removeServer(SkConfig *config)
 
 void SkMainWindow::addClient(SkConfig *config)
 {
-    SkData *data = new SkData(config, this);
-    m_data->addTab(data, config->m_name);
+    if (0 == config)
+        return;
+    switch (config->m_type)
+    {
+    case SOCKET_TYPE_TCP:
+    {
+        SkData *data = new SkDataTcpCleint(config);
+        m_data->addTab(data, config->m_name);
+        m_status->showMessage(QString(
+            tr("Client Add: %1").arg(config->m_name)));
+        break;
+    }
+    case SOCKET_TYPE_UDP:
+    {
+        SkData *data = new SkData(config);
+        m_data->addTab(data, config->m_name);
+        m_status->showMessage(QString(
+            tr("Client Add: %1").arg(config->m_name)));
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void SkMainWindow::startClient(SkConfig *config)
+{
+    if (0 == config)
+        return;
+}
+
+void SkMainWindow::stopClient(SkConfig *config)
+{
+    if (0 == config)
+        return;
 }
 
 void SkMainWindow::removeClient(SkConfig *config)
 {
     SkData *data;
     int cnt = m_data->count();
+    if (0 == config)
+        return;
     for (int idx = 0; idx < cnt; idx++)
     {
         data = (SkData *)m_data->widget(idx);
         if (config == data->m_config)
         {
             m_data->removeTab(idx);
-            // emit signal;
+            m_status->showMessage(QString(
+                tr("Client Remove: %1").arg(config->m_name)));
             break;
         }
     }
