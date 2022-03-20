@@ -25,17 +25,8 @@ int SkConfig::verify(void)
     return 0;
 }
 
-int UDPConfig::verify(void)
+int ClientConfig::verify(void)
 {
     return 0;
 }
 
-int TCPClientConfig::verify(void)
-{
-    return 0;
-}
-
-int TCPServerConfig::verify(void)
-{
-    return 0;
-}

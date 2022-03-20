@@ -41,8 +41,8 @@ SkMainWindow::~SkMainWindow()
 
 void SkMainWindow::initUserIF(void)
 {
-    m_tools->addAction(m_menu->m_actAbout);
-    m_tools->addAction(m_menu->m_actAboutQt);
+    m_tools->addAction(&m_menu->m_actAbout);
+    m_tools->addAction(&m_menu->m_actAboutQt);
     setMenuBar(m_menu);
     addToolBar(m_tools);
     setStatusBar(m_status);
@@ -56,7 +56,7 @@ void SkMainWindow::initUserIF(void)
 
 void SkMainWindow::addServer(SkConfig *config)
 {
-    SkData *data = new SkData(config, this);
+    SkData *data = new SkData(config);
     m_data->addTab(data, config->m_name);
 }
 

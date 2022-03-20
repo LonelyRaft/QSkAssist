@@ -1,7 +1,10 @@
 
 add_library(${QSKA_LOGIC}
     skconfig.cpp
-    sktest.cpp)
+    sktest.cpp
+    tcpclient.cpp
+    tcpserver.cpp
+    udpsocket.cpp)
 target_link_libraries(${QSKA_LOGIC}
     PUBLIC Qt5::Network)
 target_include_directories(${QSKA_LOGIC} 

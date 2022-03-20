@@ -6,7 +6,6 @@
 
 SkServerTree::SkServerTree(QWidget *parent) : QTreeView(parent)
 {
-    m_model = new QStandardItemModel(this);
     initUserIF();
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &SkServerTree::customContextMenuRequested,
@@ -15,56 +14,41 @@ SkServerTree::SkServerTree(QWidget *parent) : QTreeView(parent)
 
 SkServerTree::~SkServerTree()
 {
-    delete m_model;
 }
 
 void SkServerTree::initUserIF(void)
 {
-    m_model->setHorizontalHeaderLabels(QStringList(QString(tr("Servers"))));
-    setModel(m_model);
+    m_model.setHorizontalHeaderLabels(QStringList(QString(tr("Servers"))));
+    setModel(&m_model);
 }
 
 void SkServerTree::onCtxMenu(const QPoint &pos)
 {
     SkServerMenu menu;
-    connect(menu.m_new, &QAction::triggered,
+    connect(&menu.m_new, &QAction::triggered,
             this, &SkServerTree::onNew);
-    connect(menu.m_start, &QAction::triggered,
+    connect(&menu.m_start, &QAction::triggered,
             this, &SkServerTree::onStart);
-    connect(menu.m_stop, &QAction::triggered,
+    connect(&menu.m_stop, &QAction::triggered,
             this, &SkServerTree::onStop);
-    connect(menu.m_delete, &QAction::triggered,
+    connect(&menu.m_delete, &QAction::triggered,
             this, &SkServerTree::onDelete);
-    // connect(menu.m_refresh, &QAction::triggered,
+    // connect(&menu.m_refresh, &QAction::triggered,
     // this, &SkServerTree::onRefresh);
     menu.exec(QCursor::pos());
 }
 
 void SkServerTree::onNew(bool checked)
 {
-    SkDlgConfig server;
+    SkDlgServer server;
     if (server.exec() == QDialog::Accepted)
     {
-        SkConfig *config;
-        int type = server.m_type->currentIndex();
-        if (SOCKET_TYPE_TCP == type)
+        SkConfig *config = new ServerConfig;
+        if (!server.getSocketConfig(config))
         {
-            config = new TCPServerConfig;
-            server.getTcpServer(config);
-        }
-        else if (SOCKET_TYPE_UDP == type)
-        {
-            config = new UDPConfig;
-            server.getUdpSocket(config);
-        }
-        else
-            return;
-        if (!config->verify())
-        {
-            QStandardItem *item =
-                new QStandardItem(config->m_name);
+            QStandardItem *item = new QStandardItem(config->m_name);
             item->setData(QVariant::fromValue(config), SERVER_ROLE);
-            m_model->appendRow(item);
+            m_model.appendRow(item);
             emit addServer(config);
         }
     }
@@ -86,7 +70,7 @@ void SkServerTree::onDelete(bool checked)
     if (index.isValid())
     {
         SkConfig *config = index.data(SERVER_ROLE).value<SkConfig *>();
-        m_model->removeRow(index.row());
+        m_model.removeRow(index.row());
         emit removeServer(config);
     }
 }
@@ -98,7 +82,6 @@ void SkServerTree::onDelete(bool checked)
 
 SkClientTree::SkClientTree(QWidget *parent) : QTreeView(parent)
 {
-    m_model = new QStandardItemModel(this);
     initUserIF();
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &SkClientTree::customContextMenuRequested,
@@ -107,55 +90,41 @@ SkClientTree::SkClientTree(QWidget *parent) : QTreeView(parent)
 
 SkClientTree::~SkClientTree()
 {
-    delete m_model;
 }
 
 void SkClientTree::initUserIF(void)
 {
-    m_model->setHorizontalHeaderLabels(QStringList(QString(tr("Clients"))));
-    setModel(m_model);
+    m_model.setHorizontalHeaderLabels(QStringList(QString(tr("Clients"))));
+    setModel(&m_model);
 }
 
 void SkClientTree::onCtxMenu(const QPoint &pos)
 {
     SkClientMenu menu;
-    connect(menu.m_new, &QAction::triggered,
+    connect(&menu.m_new, &QAction::triggered,
             this, &SkClientTree::onNew);
-    connect(menu.m_start, &QAction::triggered,
+    connect(&menu.m_start, &QAction::triggered,
             this, &SkClientTree::onStart);
-    connect(menu.m_stop, &QAction::triggered,
+    connect(&menu.m_stop, &QAction::triggered,
             this, &SkClientTree::onStop);
-    connect(menu.m_delete, &QAction::triggered,
+    connect(&menu.m_delete, &QAction::triggered,
             this, &SkClientTree::onDelete);
-    // connect(menu.m_refresh, &QAction::triggered,
+    // connect(&menu.m_refresh, &QAction::triggered,
     // this, &SkClientTree::onRefresh);
     menu.exec(QCursor::pos());
 }
 
 void SkClientTree::onNew(bool checked)
 {
-    SkDlgConfig client;
+    SkDlgClient client;
     if (client.exec() == QDialog::Accepted)
     {
-        SkConfig *config;
-        int type = client.m_type->currentIndex();
-        if (SOCKET_TYPE_TCP == type)
-        {
-            config = new TCPClientConfig;
-            client.getTcpClient(config);
-        }
-        else if (SOCKET_TYPE_UDP == type)
-        {
-            config = new UDPConfig;
-            client.getUdpSocket(config);
-        }
-        else
-            return;
-        if (!config->verify())
+        SkConfig *config = new ClientConfig;
+        if (!client.getSocketConfig(config))
         {
             QStandardItem *item = new QStandardItem(config->m_name);
             item->setData(QVariant::fromValue(config), CLIENT_ROLE);
-            m_model->appendRow(item);
+            m_model.appendRow(item);
             emit addClient(config);
         }
     }
@@ -177,7 +146,7 @@ void SkClientTree::onDelete(bool checked)
     if (index.isValid())
     {
         SkConfig *config = index.data(CLIENT_ROLE).value<SkConfig *>();
-        m_model->removeRow(index.row());
+        m_model.removeRow(index.row());
         emit removeClient(config);
     }
 }

@@ -29,7 +29,7 @@ public slots:
     // void onRefresh(bool);
 
 private:
-    QStandardItemModel *m_model;
+    QStandardItemModel m_model;
     void initUserIF(void);
 };
 
@@ -54,7 +54,7 @@ public slots:
     // void onRefresh(bool);
 
 private:
-    QStandardItemModel *m_model;
+    QStandardItemModel m_model;
     void initUserIF(void);
 };
 

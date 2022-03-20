@@ -14,11 +14,11 @@ public:
     ~SkMenuBar();
 
 private:
-    QMenu *m_file;
-    QMenu *m_help;
-    QMenu *m_setting;
-    QAction *m_actAbout;
-    QAction *m_actAboutQt;
+    QMenu m_file;
+    QMenu m_help;
+    QMenu m_setting;
+    QAction m_actAbout;
+    QAction m_actAboutQt;
     friend class SkMainWindow;
     void initUserIF(void);
 };
@@ -31,12 +31,11 @@ public:
     ~SkServerMenu();
 
 private:
-    QAction *m_acts;
-    QAction *m_new;
-    QAction *m_start;
-    QAction *m_stop;
-    QAction *m_delete;
-    // QAction *m_refresh;
+    QAction m_new;
+    QAction m_start;
+    QAction m_stop;
+    QAction m_delete;
+    // QAction m_refresh;
     friend class SkServerTree;
     void initUserIF(void);
 };
@@ -49,12 +48,11 @@ public:
     ~SkClientMenu();
 
 private:
-    QAction *m_acts;
-    QAction *m_new;
-    QAction *m_start;
-    QAction *m_stop;
-    QAction *m_delete;
-    // QAction *m_refresh;
+    QAction m_new;
+    QAction m_start;
+    QAction m_stop;
+    QAction m_delete;
+    // QAction m_refresh;
     friend class SkClientTree;
     void initUserIF(void);
 };

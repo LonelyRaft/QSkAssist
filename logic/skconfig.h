@@ -12,36 +12,25 @@ class SkConfig
 {
 public:
     unsigned int m_type;
-    unsigned int m_hLocal;
-    unsigned int m_pLocal;
+    unsigned int m_host;
+    unsigned int m_port;
     QString m_name;
     static unsigned int ip2num(const QString &src);
     static QString num2ip(const unsigned int src);
-    int verify(void);
+    virtual int verify(void);
 };
 Q_DECLARE_METATYPE(SkConfig*)
 
-class UDPConfig : public SkConfig
+class ClientConfig : public SkConfig
 {
 public:
-    unsigned int m_hTarget;
-    unsigned int m_pTarget;
+    unsigned int m_hostLocal;
+    unsigned int m_portLocal;
     int verify(void);
 };
 
-class TCPServerConfig : public SkConfig
+class ServerConfig : public SkConfig
 {
-public:
-    unsigned int m_mLocal;
-    int verify(void);
-};
-
-class TCPClientConfig : public SkConfig
-{
-public:
-    unsigned int m_hTarget;
-    unsigned int m_pTarget;
-    int verify(void);
 };
 
 #endif // Q_SOCKET_ASSISTANT_CONFIG

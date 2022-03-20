@@ -3,87 +3,86 @@
 
 SkData::SkData(SkConfig *config, QWidget *parent) : QWidget(parent)
 {
-    m_label1 = new QLabel(this);
-    m_label2 = new QLabel(this);
-    m_hex1 = new QCheckBox(this);
-    m_hex2 = new QCheckBox(this);
-    m_clear1 = new QToolButton(this);
-    m_clear2 = new QToolButton(this);
-    m_tools1 = new QToolBar(this);
-    m_tools2 = new QToolBar(this);
-    m_data1 = new QTextEdit(this);
-    m_data2 = new QTextEdit(this);
-    m_box1 = new QBoxLayout(QBoxLayout::TopToBottom);
-    m_box2 = new QBoxLayout(QBoxLayout::TopToBottom);
-    m_recv = new QWidget(this);
-    m_send = new QWidget(this);
-    m_splitter = new QSplitter(Qt::Vertical, this);
-    m_grid = new QGridLayout;
+    m_boxSend = new QBoxLayout(QBoxLayout::TopToBottom);
+    m_boxRecv = new QBoxLayout(QBoxLayout::TopToBottom);
+    m_labelSend = new QLabel;
+    m_labelRecv = new QLabel;
+    m_clearSend = new QToolButton;
+    m_texSend = new QToolButton;
+    m_clearRecv = new QToolButton;
+    m_texStop = new QToolButton;
+    m_texSave = new QToolButton;
+    m_hexSend = new QCheckBox;
+    m_hexRecv = new QCheckBox;
+    m_toolSend = new QToolBar;
+    m_toolRecv = new QToolBar;
+    m_dataSend = new QTextEdit;
+    m_dataRecv = new QTextEdit;
+    m_send = new QWidget;
+    m_recv = new QWidget;
     m_config = config;
-    m_worker = new QThread;
-    m_test = new SkTest;
     initUserIF();
-    connect(m_clear1, &QToolButton::clicked,
-            m_data1, &QTextEdit::clear);
-    connect(m_clear2, &QToolButton::clicked,
-            m_data2, &QTextEdit::clear);
-    // connect(m_clear1, &QToolButton::clicked,
-    //         m_test, &SkTest::test1);
-    // connect(m_clear2, &QToolButton::clicked,
-    //         m_test, &SkTest::test2);
-    // connect(m_test, &SkTest::test1ok,
-    //         this, &SkData::test1slot);
-    // connect(m_test, &SkTest::test2ok,
-    //         m_data2, &QTextEdit::append);
-    m_test->moveToThread(m_worker);
-    m_worker->start();
+    connect(m_clearSend, &QToolButton::clicked,
+            m_dataSend, &QTextEdit::clear);
+    connect(m_clearRecv, &QToolButton::clicked,
+            m_dataRecv, &QTextEdit::clear);
+    m_worker.start();
 }
 
 SkData::~SkData()
 {
-    m_worker->quit();
-    m_worker->wait();
-    delete m_label1;
-    delete m_label2;
-    delete m_hex1;
-    delete m_hex2;
-    delete m_clear1;
-    delete m_clear2;
-    delete m_tools1;
-    delete m_tools2;
-    delete m_data1;
-    delete m_data2;
-    delete m_box1;
-    delete m_box2;
+    m_worker.quit();
+    m_worker.wait();
+    delete m_labelSend;
+    delete m_labelRecv;
+    delete m_clearSend;
+    delete m_clearRecv;
+    delete m_texSend;
+    delete m_texStop;
+    delete m_texSave;
+    delete m_hexSend;
+    delete m_hexRecv;
+    delete m_boxSend;
+    delete m_boxRecv;
+    delete m_toolSend;
+    delete m_toolRecv;
+    delete m_dataSend;
+    delete m_dataRecv;
     delete m_recv;
     delete m_send;
-    delete m_splitter;
 }
 
 void SkData::initUserIF(void)
 {
-    m_label1->setText(tr("Send Area:"));
-    m_hex1->setText(tr("Display Hex"));
-    m_clear1->setText(tr("Clear"));
-    m_tools1->addWidget(m_label1);
-    m_tools1->addWidget(m_hex1);
-    m_tools1->addWidget(m_clear1);
-    m_box1->addWidget(m_tools1);
-    m_box1->addWidget(m_data1);
-    m_recv->setLayout(m_box1);
+    m_labelSend->setText(tr("Send Area:"));
+    m_hexSend->setText(tr("Display Hex"));
+    m_clearSend->setText(tr("Clear"));
+    m_texSend->setText(tr("Send"));
+    m_toolSend->addWidget(m_labelSend);
+    m_toolSend->addWidget(m_hexSend);
+    m_toolSend->addWidget(m_clearSend);
+    m_toolSend->addWidget(m_texSend);
+    m_boxSend->addWidget(m_toolSend);
+    m_boxSend->addWidget(m_dataSend);
+    m_recv->setLayout(m_boxSend);
 
-    m_label2->setText(tr("Recv Area:"));
-    m_hex2->setText(tr("Display Hex"));
-    m_clear2->setText(tr("Clear"));
-    m_tools2->addWidget(m_label2);
-    m_tools2->addWidget(m_hex2);
-    m_tools2->addWidget(m_clear2);
-    m_box2->addWidget(m_tools2);
-    m_box2->addWidget(m_data2);
-    m_send->setLayout(m_box2);
+    m_labelRecv->setText(tr("Recv Area:"));
+    m_hexRecv->setText(tr("Display Hex"));
+    m_clearRecv->setText(tr("Clear"));
+    m_texStop->setText(tr("Stop"));
+    m_texSave->setText(tr("Save"));
+    m_toolRecv->addWidget(m_labelRecv);
+    m_toolRecv->addWidget(m_hexRecv);
+    m_toolRecv->addWidget(m_clearRecv);
+    m_toolRecv->addWidget(m_texStop);
+    m_toolRecv->addWidget(m_texSave);
+    m_boxRecv->addWidget(m_toolRecv);
+    m_boxRecv->addWidget(m_dataRecv);
+    m_send->setLayout(m_boxRecv);
 
-    m_splitter->addWidget(m_send);
-    m_splitter->addWidget(m_recv);
-    m_grid->addWidget(m_splitter);
-    setLayout(m_grid);
+    m_splitter.setOrientation(Qt::Vertical);
+    m_splitter.addWidget(m_send);
+    m_splitter.addWidget(m_recv);
+    m_grid.addWidget(&m_splitter);
+    setLayout(&m_grid);
 }
