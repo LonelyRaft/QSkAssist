@@ -62,10 +62,8 @@ void SkClientMenu::initUserIF(void)
     m_start.setText(tr("Start Client"));
     m_stop.setText(tr("Stop Client"));
     m_delete.setText(tr("Delete Client"));
-    // m_refresh.setText(tr("Refresh Client"));
     addAction(&m_new);
     addAction(&m_start);
     addAction(&m_stop);
     addAction(&m_delete);
-    // addAction(&m_refresh);
 }

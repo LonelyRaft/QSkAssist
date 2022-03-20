@@ -8,6 +8,9 @@
 #include <qaction.h>
 #include "skconfig.h"
 
+/**************************************
+ * 服务器链接树
+**************************************/
 class SkServerTree : public QTreeView
 {
 #define SERVER_ROLE 0x102
@@ -28,13 +31,15 @@ public slots:
     void onStart(bool);
     void onStop(bool);
     void onDelete(bool);
-    // void onRefresh(bool);
 
 private:
     QStandardItemModel m_model;
     void initUserIF(void);
 };
 
+/**************************************
+ * 客户端链接树
+**************************************/
 class SkClientTree : public QTreeView
 {
 #define CLIENT_ROLE 0x101
@@ -55,7 +60,6 @@ public slots:
     void onStart(bool);
     void onStop(bool);
     void onDelete(bool);
-    // void onRefresh(bool);
 
 private:
     QStandardItemModel m_model;

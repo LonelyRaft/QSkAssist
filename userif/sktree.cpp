@@ -18,7 +18,8 @@ SkServerTree::~SkServerTree()
 
 void SkServerTree::initUserIF(void)
 {
-    m_model.setHorizontalHeaderLabels(QStringList(QString(tr("Servers"))));
+    m_model.setHorizontalHeaderLabels(
+        QStringList(QString(tr("Servers"))));
     setModel(&m_model);
 }
 
@@ -33,62 +34,24 @@ void SkServerTree::onCtxMenu(const QPoint &pos)
             this, &SkServerTree::onStop);
     connect(&menu.m_delete, &QAction::triggered,
             this, &SkServerTree::onDelete);
-    // connect(&menu.m_refresh, &QAction::triggered,
-    // this, &SkServerTree::onRefresh);
     menu.exec(QCursor::pos());
 }
 
 void SkServerTree::onNew(bool checked)
 {
-    SkDlgServer server;
-    if (server.exec() == QDialog::Accepted)
-    {
-        SkConfig *config = new ServerConfig;
-        if (!server.getSocketConfig(config))
-        {
-            QStandardItem *item = new QStandardItem(config->m_name);
-            item->setData(QVariant::fromValue(config), SERVER_ROLE);
-            m_model.appendRow(item);
-            emit addServer(config);
-        }
-    }
 }
 
 void SkServerTree::onStart(bool checked)
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
-    {
-        SkConfig *config = index.data(SERVER_ROLE).value<SkConfig *>();
-        emit startServer(config);
-    }
 }
 
 void SkServerTree::onStop(bool checked)
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
-    {
-        SkConfig *config = index.data(SERVER_ROLE).value<SkConfig *>();
-        emit stopServer(config);
-    }
 }
 
 void SkServerTree::onDelete(bool checked)
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
-    {
-        SkConfig *config = index.data(SERVER_ROLE).value<SkConfig *>();
-        m_model.removeRow(index.row());
-        emit removeServer(config);
-    }
 }
-
-// void SkServerTree::onRefresh(bool checked)
-// {
-//     qDebug() << "onRefresh Server\n";
-// }
 
 SkClientTree::SkClientTree(QWidget *parent) : QTreeView(parent)
 {
@@ -119,59 +82,21 @@ void SkClientTree::onCtxMenu(const QPoint &pos)
             this, &SkClientTree::onStop);
     connect(&menu.m_delete, &QAction::triggered,
             this, &SkClientTree::onDelete);
-    // connect(&menu.m_refresh, &QAction::triggered,
-    // this, &SkClientTree::onRefresh);
     menu.exec(QCursor::pos());
 }
 
 void SkClientTree::onNew(bool checked)
 {
-    SkDlgClient client;
-    if (client.exec() == QDialog::Accepted)
-    {
-        SkConfig *config = new ClientConfig;
-        if (!client.getSocketConfig(config))
-        {
-            QStandardItem *item = new QStandardItem(config->m_name);
-            item->setData(QVariant::fromValue(config), CLIENT_ROLE);
-            m_model.appendRow(item);
-            emit addClient(config);
-        }
-    }
 }
 
 void SkClientTree::onStart(bool checked)
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
-    {
-        SkConfig *config = index.data(CLIENT_ROLE).value<SkConfig *>();
-        emit startClient(config);
-    }
 }
 
 void SkClientTree::onStop(bool checked)
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
-    {
-        SkConfig *config = index.data(CLIENT_ROLE).value<SkConfig *>();
-        emit stopClient(config);
-    }
 }
 
 void SkClientTree::onDelete(bool checked)
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
-    {
-        SkConfig *config = index.data(CLIENT_ROLE).value<SkConfig *>();
-        m_model.removeRow(index.row());
-        emit removeClient(config);
-    }
 }
-
-// void SkClientTree::onRefresh(bool checked)
-// {
-//     qDebug() << "onRefresh Client\n";
-// }
