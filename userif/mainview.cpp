@@ -2,6 +2,7 @@
 #include <qdebug.h>
 #include "mainview.h"
 #include "skdata.h"
+#include "tcpserver.h"
 
 SkMainWindow::SkMainWindow(QWidget *parent)
     : QMainWindow(parent)

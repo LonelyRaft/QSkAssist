@@ -27,7 +27,7 @@ void SkServerTree::initUserIF(void)
 }
 
 // 向树中添加新行
-void SkClientTree::newRow(SkConfig *skConfig)
+void SkServerTree::newRow(SkConfig *skConfig)
 {
         QStandardItem *item =
             new QStandardItem(skConfig->m_name);

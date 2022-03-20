@@ -97,7 +97,7 @@ SkDataTcp::~SkDataTcp()
 }
 
 SkDataUdp::SkDataUdp(
-    void *index, QWidget *parent = 0) : SkData(index, parent)
+    void *index, QWidget *parent) : SkData(index, parent)
 {
     m_client = 0;
 }
