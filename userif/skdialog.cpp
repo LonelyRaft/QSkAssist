@@ -121,12 +121,11 @@ int SkDlgClient::getSocketConfig(SkConfig *config)
     client->m_type = m_type.currentIndex();
     client->m_host = SkConfig::ip2num(m_edtHost.text());
     client->m_hostLocal = SkConfig::ip2num(m_edtHostLocal.text());
-    if (0 == client->m_host || 0 == client->m_hostLocal)
+    if (0 == client->m_host)
         return 2;
     client->m_port = m_edtPort.text().toUInt();
     client->m_portLocal = m_edtPortLocal.text().toUInt();
-    if (0 == client->m_port || 0xffff < client->m_port ||
-        0 == client->m_portLocal || 0xffff < client->m_portLocal)
+    if (0 == client->m_port || 0xffff < client->m_port)
         return 3;
     if (client->m_name.isEmpty())
     {

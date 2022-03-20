@@ -1,8 +1,9 @@
 
 #include "skdata.h"
 
-SkData::SkData(SkConfig *config, QWidget *parent) : QWidget(parent)
+SkData::SkData(void *index, QWidget *parent) : QWidget(parent)
 {
+    m_index = index;
     m_boxSend = new QBoxLayout(QBoxLayout::TopToBottom);
     m_boxRecv = new QBoxLayout(QBoxLayout::TopToBottom);
     m_labelSend = new QLabel;
@@ -81,4 +82,28 @@ void SkData::initUserIF(void)
     m_splitter.addWidget(m_recv);
     m_grid.addWidget(&m_splitter);
     setLayout(&m_grid);
+}
+
+SkDataTcp::SkDataTcp(
+    void *index, QWidget *parent) : SkData(index, parent)
+{
+    m_client = 0;
+}
+
+SkDataTcp::~SkDataTcp()
+{
+    if (m_client)
+        delete m_client;
+}
+
+SkDataUdp::SkDataUdp(
+    void *index, QWidget *parent = 0) : SkData(index, parent)
+{
+    m_client = 0;
+}
+
+SkDataUdp::~SkDataUdp()
+{
+    if(m_client)
+    delete m_client;
 }

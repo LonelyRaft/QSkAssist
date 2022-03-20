@@ -11,6 +11,9 @@
 #include "sktree.h"
 #include "skmenu.h"
 
+/**********************************************
+ * 应用主窗口
+ * ********************************************/
 class SkMainWindow : public QMainWindow
 {
 public:
@@ -18,24 +21,41 @@ public:
     ~SkMainWindow();
 
 public slots:
-    void addServer(SkConfig *);
+    // 新建服务器
+    void newServer(SkConfig *);
+    // 启动服务器
     void startServer(SkConfig *);
+    // 停止服务器
     void stopServer(SkConfig *);
-    void removeServer(SkConfig *);
-    void addClient(SkConfig *);
+    // 删除服务器
+    void delServer(SkConfig *);
+    // 新建客户端
+    void newClient(SkConfig *);
+    // 启动客户端
     void startClient(SkConfig *);
+    // 停止客户端
     void stopClient(SkConfig *);
-    void removeClient(SkConfig *);
+    // 删除客户端
+    void delClient(SkConfig *);
 
 private:
+    // 主窗口菜单栏
     SkMenuBar *m_menu;
+    // 主窗口工具栏
     QToolBar *m_tools;
+    // 主窗口状态栏
     QStatusBar *m_status;
+    // 主窗口数据收发区
     QTabWidget *m_data;
+    // 服务器树
     SkServerTree *m_server;
+    // 客户端树
     SkClientTree *m_client;
+    // 主窗口分区
     QSplitter *m_links;
+    // 主窗口布局（格栅布局）
     QGridLayout *m_layout;
+    // 主窗口中心组件
     QWidget *m_content;
     void initUserIF(void);
 };

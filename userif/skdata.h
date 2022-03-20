@@ -12,18 +12,22 @@
 #include <qgridlayout.h>
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
+#include <qtcpsocket.h>
+#include <qudpsocket.h>
 #include "skconfig.h"
 
 class SkMainWindow;
 class SkData : public QWidget
 {
 public:
-    SkData(SkConfig *config, QWidget *parent = 0);
+    SkData(void *index, QWidget *parent = 0);
     ~SkData();
 
 protected:
+    // 后台线程
     QThread m_worker;
-    SkConfig *m_config;
+    // 数据区索引
+    void *m_index;
     QLabel *m_labelSend;
     QLabel *m_labelRecv;
     QCheckBox *m_hexSend;
@@ -45,6 +49,26 @@ protected:
     QGridLayout m_grid;
     friend class SkMainWindow;
     void initUserIF(void);
+};
+
+class SkDataTcp : public SkData
+{
+public:
+    SkDataTcp(void *index, QWidget *parent = 0);
+    ~SkDataTcp();
+
+private:
+    QTcpSocket *m_client;
+};
+
+class SkDataUdp : public SkData
+{
+public:
+    SkDataUdp(void *index, QWidget *parent = 0);
+    ~SkDataUdp();
+
+private:
+    QUdpSocket *m_client;
 };
 
 #endif // Q_SOCKET_ASSISTANT_DATA
