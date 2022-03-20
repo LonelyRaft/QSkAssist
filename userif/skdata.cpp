@@ -1,7 +1,7 @@
 
 #include "skdata.h"
 
-SkData::SkData(SkConfig *config, QWidget *parent) : QWidget(parent)
+SkData::SkData(QWidget *parent) : QWidget(parent)
 {
     m_boxSend = new QBoxLayout(QBoxLayout::TopToBottom);
     m_boxRecv = new QBoxLayout(QBoxLayout::TopToBottom);
@@ -20,7 +20,6 @@ SkData::SkData(SkConfig *config, QWidget *parent) : QWidget(parent)
     m_dataRecv = new QTextEdit;
     m_send = new QWidget;
     m_recv = new QWidget;
-    m_config = config;
     initUserIF();
     connect(m_clearSend, &QToolButton::clicked,
             m_dataSend, &QTextEdit::clear);
@@ -85,10 +84,11 @@ void SkData::initUserIF(void)
 }
 
 SkDataTcpServer::SkDataTcpServer(
-    SkConfig *config, QWidget *parent) : SkData(config, parent)
+    SkConfig *config, QWidget *parent) : SkData(parent)
 {
-    // m_server.moveToThread(&m_worker);
-    // m_worker.start();
+    m_server.setConfig(config);
+    m_server.moveToThread(&m_worker);
+    m_worker.start();
 }
 
 SkDataTcpServer::~SkDataTcpServer()
@@ -98,7 +98,7 @@ SkDataTcpServer::~SkDataTcpServer()
 }
 
 SkDataTcpCleint::SkDataTcpCleint(
-    SkConfig *config, QWidget *parent) : SkData(config, parent)
+    SkConfig *config, QWidget *parent) : SkData(parent)
 {
 }
 

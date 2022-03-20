@@ -21,12 +21,11 @@ class SkMainWindow;
 class SkData : public QWidget
 {
 public:
-    SkData(SkConfig *config = 0, QWidget *parent = 0);
+    SkData(QWidget *parent = 0);
     ~SkData();
 
 protected:
     QThread m_worker;
-    SkConfig *m_config;
     QLabel *m_labelSend;
     QLabel *m_labelRecv;
     QCheckBox *m_hexSend;

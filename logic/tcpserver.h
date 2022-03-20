@@ -8,13 +8,20 @@
 #include "skconfig.h"
 #include "tcpclient.h"
 
-class SkDataTcpServer;
 class SkTcpServer : public QObject
 {
     Q_OBJECT
 public:
     SkTcpServer(SkConfig *config = 0);
     ~SkTcpServer();
+    inline void setConfig(SkConfig *config)
+    {
+        m_config = config;
+    }
+    inline SkConfig *getConfig() const
+    {
+        return m_config;
+    }
 signals:
     void readTextOkay(QString &);
 public slots:
@@ -28,7 +35,6 @@ private:
     SkConfig *m_config;
     QTcpServer *m_server;
     QList<SkTcpClient *> m_clients;
-    friend class SkDataTcpServer;
 };
 
 #endif // Q_SOCKET_ASSISTANT_TCPSERVER

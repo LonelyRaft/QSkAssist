@@ -23,7 +23,7 @@ void SkTcpServer::startListen(void)
     {
         ServerConfig *config = (ServerConfig *)m_config;
         if (!m_server->isListening())
-        m_server->listen(QHostAddress::Any, config->m_port);
+            m_server->listen(QHostAddress::Any, config->m_port);
     }
 }
 
